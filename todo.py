@@ -1,4 +1,5 @@
 tasks = []
+completed = set()
 
 
 def main():
@@ -12,7 +13,8 @@ def main():
                 print("No tasks.")
             else:
                 for i, task in enumerate(tasks, 1):
-                    print(f"{i}. {task}")
+                    mark = "✓ " if i in completed else "  "
+                    print(f"{i}. {mark}{task}")
         elif command.startswith("add "):
             task = command[4:].strip()
             if task:
@@ -20,8 +22,16 @@ def main():
                 print(f"Added: {task}")
             else:
                 print("Commands: add [task], list, quit")
+        elif command.startswith("done "):
+            arg = command[5:].strip()
+            if arg.isdigit() and 1 <= int(arg) <= len(tasks):
+                n = int(arg)
+                completed.add(n)
+                print(f"Marked done: {tasks[n - 1]}")
+            else:
+                print(f"Invalid task number: '{arg}'. Use 'list' to see available tasks.")
         else:
-            print("Commands: add [task], list, quit")
+            print("Unknown command. Commands: add [task], list, done [number], quit")
 
 
 if __name__ == "__main__":
