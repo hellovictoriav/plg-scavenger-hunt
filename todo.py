@@ -18,6 +18,8 @@ def main():
             if task:
                 tasks.append(task)
                 print(f"Added: {task}")
+            else:
+                print("Commands: add [task], list, quit")
         else:
             print("Commands: add [task], list, quit")
 
