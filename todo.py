@@ -21,7 +21,7 @@ def main():
                 tasks.append(task)
                 print(f"Added: {task}")
             else:
-                print("Commands: add [task], list, quit")
+                print("Usage: add [task]")
         elif command.startswith("done "):
             arg = command[5:].strip()
             if arg.isdigit() and 1 <= int(arg) <= len(tasks):
