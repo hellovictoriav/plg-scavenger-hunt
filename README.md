@@ -4,7 +4,7 @@ An interactive mobile microsite for a Prospect Lefferts Gardens neighborhood sca
 
 ## Live site
 
-**https://withgraphite.github.io/vv-test-repo/**
+**https://fuzzy-funicular-y73ypow.pages.github.io/**
 
 Share that link or the QR code in [`qr.html`](qr.html) with your guests.
 
