@@ -4,7 +4,7 @@ An interactive mobile microsite for a Prospect Lefferts Gardens neighborhood sca
 
 ## Live site
 
-**https://fuzzy-funicular-y73ypow.pages.github.io/**
+**https://hellovictoriav.github.io/plg-scavenger-hunt/**
 
 Share that link or the QR code in [`qr.html`](qr.html) with your guests.
 
