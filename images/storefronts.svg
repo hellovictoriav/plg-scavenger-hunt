@@ -1,15 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Closed storefront on Flatbush">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#3d405b"/>
-      <stop offset="100%" stop-color="#81b29a"/>
-    </linearGradient>
-  </defs>
-  <rect width="800" height="500" fill="url(#bg)"/>
-  <rect x="200" y="120" width="400" height="280" fill="#f4f1de" rx="4"/>
-  <rect x="240" y="160" width="320" height="200" fill="#1d1d1d" opacity="0.15"/>
-  <line x1="240" y1="280" x2="560" y2="280" stroke="#e07a5f" stroke-width="8"/>
-  <text x="400" y="250" text-anchor="middle" fill="#3d405b" font-family="Georgia, serif" font-size="42" font-weight="bold">CLOSED</text>
-  <text x="400" y="380" text-anchor="middle" fill="#f4f1de" font-family="Georgia, serif" font-size="18">What should be here?</text>
-  <text x="400" y="55" text-anchor="middle" fill="#f4f1de" font-family="Georgia, serif" font-size="22">Ghosts of Storefronts</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Closed storefront">
+  <rect width="800" height="600" fill="#1c5bd8"/>
+  <rect x="170" y="120" width="460" height="360" fill="#f2e7cf"/>
+  <rect x="210" y="170" width="380" height="240" fill="#13202e" opacity="0.85"/>
+  <rect x="210" y="300" width="380" height="22" fill="#ff6319"/>
+  <text x="400" y="280" text-anchor="middle" fill="#f2e7cf" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="bold" letter-spacing="6">CLOSED</text>
+  <rect x="0" y="500" width="800" height="100" fill="#13202e"/>
+  <text x="400" y="562" text-anchor="middle" fill="#fccc0a" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="bold" letter-spacing="2">WHAT SHOULD BE HERE?</text>
 </svg>

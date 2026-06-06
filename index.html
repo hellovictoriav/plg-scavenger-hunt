@@ -3,537 +3,644 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#1d3557">
+  <meta name="theme-color" content="#13202e">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>PLG Scavenger Hunt</title>
+  <title>PLG Heritage Hunt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0f1a2e;
-      --surface: #1d3557;
-      --accent: #e9c46a;
-      --accent-2: #f4a261;
-      --accent-3: #2a9d8f;
-      --text: #f1faee;
-      --muted: #a8dadc;
-      --done: #2a9d8f;
-      --radius: 18px;
-      --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      --ink: #13202e;
+      --ink-2: #1b2d40;
+      --denim: #2c4a6e;
+      --paper: #f2e7cf;
+      --paper-2: #e6d4ad;
+      --line: rgba(242, 231, 207, 0.16);
+      --orange: #ff6319;
+      --yellow: #fccc0a;
+      --red: #ee352e;
+      --green: #00933c;
+      --blue: #1c5bd8;
+      --purple: #b933ad;
+      --lime: #6cbe45;
+      --text: #f2e7cf;
+      --muted: #9fb0c4;
+      --radius: 6px;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+      --helv: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html, body { height: 100%; }
+
     body {
-      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      font-family: var(--helv);
       background:
-        radial-gradient(ellipse at top, #264653 0%, transparent 60%),
-        radial-gradient(ellipse at bottom right, #e76f51 0%, transparent 40%),
-        var(--bg);
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(44, 74, 110, 0.55) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(255, 99, 25, 0.12) 0%, transparent 55%),
+        var(--ink);
       color: var(--text);
-      min-height: 100dvh;
       line-height: 1.5;
-      padding-bottom: env(safe-area-inset-bottom, 24px);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(15, 26, 46, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(168, 218, 220, 0.15);
-      padding: 1rem 1.25rem 0.85rem;
-    }
-
-    .header h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.35rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .header p {
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 0.2rem;
-    }
-
-    .progress-wrap {
-      margin-top: 0.85rem;
-    }
-
-    .progress-meta {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .progress-bar {
-      height: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--accent-3), var(--accent));
-      border-radius: 99px;
-      transition: width 0.4s ease;
-    }
-
-    main {
-      padding: 1rem 1rem 2rem;
-      max-width: 520px;
-      margin: 0 auto;
-    }
-
-    .intro {
-      background: rgba(29, 53, 87, 0.6);
-      border: 1px solid rgba(233, 196, 106, 0.2);
-      border-radius: var(--radius);
-      padding: 1rem 1.1rem;
-      margin-bottom: 1.25rem;
-      font-size: 0.92rem;
-    }
-
-    .intro strong { color: var(--accent); }
-
-    .cards { display: flex; flex-direction: column; gap: 1.1rem; }
-
-    .card-scene {
-      perspective: 1200px;
-      height: 340px;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .card {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transform-style: preserve-3d;
-      transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
-    }
-
-    .card.flipped { transform: rotateY(180deg); }
-
-    .card-face {
-      position: absolute;
+    /* vintage grain overlay */
+    body::after {
+      content: "";
+      position: fixed;
       inset: 0;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
+      pointer-events: none;
+      z-index: 9000;
+      opacity: 0.07;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    .card-front {
-      background: var(--surface);
-    }
-
-    .card-cover {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      transition: transform 0.3s ease;
-    }
-
-    .card-scene:not(.flipped-scene) .card-front:active .card-cover {
-      transform: scale(1.02);
-    }
-
-    .card-front-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(15, 26, 46, 0.92) 0%,
-        rgba(15, 26, 46, 0.35) 45%,
-        rgba(15, 26, 46, 0.15) 100%
-      );
-      display: flex;
+    /* ── Views ─────────────────────────────────────────── */
+    .view {
+      display: none;
+      min-height: 100dvh;
       flex-direction: column;
-      justify-content: flex-end;
-      padding: 1.1rem 1.2rem;
+      animation: fade 0.35s ease;
+    }
+    .view.active { display: flex; }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .stop-number {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      background: rgba(233, 196, 106, 0.95);
-      color: #1d3557;
-      font-weight: 800;
-      font-size: 0.75rem;
-      padding: 0.3rem 0.65rem;
-      border-radius: 99px;
-      letter-spacing: 0.04em;
-    }
+    .wrap { width: 100%; max-width: 560px; margin: 0 auto; padding: 0 1.25rem; }
 
-    .bonus-badge {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: rgba(42, 157, 143, 0.95);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.7rem;
-      padding: 0.3rem 0.6rem;
-      border-radius: 99px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .card-front h2 {
-      font-family: Georgia, serif;
-      font-size: 1.35rem;
-      line-height: 1.2;
-      margin-bottom: 0.25rem;
-    }
-
-    .card-front .subtitle {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
-    }
-
-    .flip-hint {
-      font-size: 0.75rem;
-      color: var(--accent);
-      display: flex;
+    /* ── Subway bullet ─────────────────────────────────── */
+    .bullet {
+      display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      justify-content: center;
+      width: 2.6rem;
+      height: 2.6rem;
+      border-radius: 50%;
+      font-family: var(--helv);
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.12);
     }
+    .bullet.dark-text { color: #13202e; }
 
-    .historic-note {
+    /* ── WELCOME / HUB ─────────────────────────────────── */
+    .hero {
+      padding: 2.6rem 0 1.4rem;
+      text-align: center;
+    }
+    .eyebrow {
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.34em;
       font-size: 0.72rem;
-      color: rgba(241, 250, 238, 0.7);
-      margin-top: 0.35rem;
-      font-style: italic;
+      font-weight: 600;
+      color: var(--yellow);
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-family: "Anton", sans-serif;
+      font-weight: 400;
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      font-size: clamp(2.9rem, 13vw, 4.6rem);
+      color: var(--paper);
+      text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
+    }
+    .hero h1 .hl { color: var(--orange); display: block; }
+    .hero .sub {
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-top: 1rem;
     }
 
-    .done-stamp {
+    .ticket {
+      background: var(--paper);
+      color: #1b2d40;
+      border-radius: var(--radius);
+      padding: 1.15rem 1.25rem;
+      margin: 1.6rem 0 1.2rem;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .ticket::before, .ticket::after {
+      content: "";
       position: absolute;
       top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-12deg);
-      border: 4px solid var(--done);
-      color: var(--done);
-      font-weight: 900;
-      font-size: 1.6rem;
-      padding: 0.4rem 1rem;
-      border-radius: 8px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
+      width: 22px; height: 22px;
+      background: var(--ink);
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+    .ticket::before { left: -11px; }
+    .ticket::after { right: -11px; }
+    .ticket h2 {
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.92rem;
+      margin-bottom: 0.4rem;
+      color: var(--red);
+    }
+    .ticket p { font-size: 0.95rem; }
+    .ticket strong { color: var(--blue); }
+
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      font-family: "Anton", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 1.25rem;
+      padding: 0.95rem 1rem;
+      border-radius: var(--radius);
+      width: 100%;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-go {
+      background: var(--yellow);
+      color: #13202e;
+      box-shadow: 0 8px 0 #c79f00, var(--shadow);
+    }
+    .btn-go:active { box-shadow: 0 3px 0 #c79f00; transform: translateY(4px) scale(0.99); }
+
+    /* THE LINE (stop map) */
+    .line-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin: 2.2rem 0 0.4rem;
+    }
+    .line-head h3 {
+      font-family: "Anton", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 1.5rem;
+      color: var(--paper);
+    }
+    .line-head span {
+      font-family: "Oswald", sans-serif;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    .line {
+      position: relative;
+      margin: 1rem 0 2.4rem;
+      padding-left: 0.3rem;
+    }
+    .line::before {
+      content: "";
+      position: absolute;
+      left: calc(1.3rem + 0.3rem);
+      top: 1.4rem;
+      bottom: 1.4rem;
+      width: 6px;
+      background: var(--line);
+      transform: translateX(-50%);
+      border-radius: 6px;
+    }
+    .stop-row {
+      display: flex;
+      align-items: center;
+      gap: 0.95rem;
+      padding: 0.55rem 0.6rem;
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      border-radius: var(--radius);
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .stop-row:active { background: rgba(242, 231, 207, 0.06); }
+    .stop-row .meta { flex: 1; min-width: 0; }
+    .stop-row .name {
+      font-family: "Oswald", sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-size: 1.02rem;
+      color: var(--paper);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .stop-row .stopno {
+      font-family: "Oswald", sans-serif;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+    .stop-row .check {
+      font-family: var(--helv);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--ink);
+      background: var(--green);
+      width: 1.5rem; height: 1.5rem;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .stop-row.done .check { display: flex; }
+    .stop-row.done .name { color: var(--green); }
+    .stop-row .arrow { color: var(--muted); font-size: 1.2rem; flex-shrink: 0; }
+    .stop-row.done .arrow { display: none; }
+
+    /* ── STOP PAGE ─────────────────────────────────────── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(19, 32, 46, 0.86);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--paper);
+      font-family: "Oswald", sans-serif;
+      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      background: rgba(15, 26, 46, 0.75);
-    }
-
-    .card-scene.is-done .done-stamp { opacity: 1; }
-
-    .card-back {
-      transform: rotateY(180deg);
-      background: linear-gradient(160deg, #1d3557 0%, #264653 100%);
-      padding: 1.1rem 1.2rem;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-    }
-
-    .card-back h3 {
-      font-family: Georgia, serif;
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      color: var(--accent);
-    }
-
-    .challenge-text {
-      font-size: 0.95rem;
-      flex: 1;
-      margin-bottom: 0.85rem;
-    }
-
-    .location-link {
+      font-size: 0.8rem;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      color: var(--muted);
+      padding: 0.5rem 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .topbar .counter {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
       font-size: 0.8rem;
-      text-decoration: none;
-      margin-bottom: 0.85rem;
-      border-bottom: 1px solid rgba(168, 218, 220, 0.3);
+      color: var(--yellow);
+    }
+    .mini-progress {
+      height: 4px;
+      background: rgba(242, 231, 207, 0.12);
+    }
+    .mini-progress > div {
+      height: 100%;
+      background: var(--yellow);
+      width: 0;
+      transition: width 0.4s ease;
     }
 
-    .location-link:hover { color: var(--accent); }
+    .stop-page { padding: 1.4rem 0 7rem; flex: 1; }
 
-    .card-actions {
+    .cover-frame {
+      background: var(--paper);
+      padding: 10px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 1.4rem;
+    }
+    .cover-frame .img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--denim);
+      border-radius: 3px;
+      filter: saturate(0.92) contrast(1.03);
+    }
+    .cover-cap {
+      font-family: "Oswald", sans-serif;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #5a6b7d;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    .stop-title-row {
       display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-      margin-top: auto;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 0.3rem;
     }
-
-    button, .btn {
-      appearance: none;
-      border: none;
-      font: inherit;
-      cursor: pointer;
-      border-radius: 12px;
-      padding: 0.75rem 1rem;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: transform 0.15s ease, opacity 0.15s ease;
+    .stop-title-row h2 {
+      font-family: "Anton", sans-serif;
+      text-transform: uppercase;
+      line-height: 0.95;
+      font-size: clamp(1.8rem, 8vw, 2.5rem);
+      color: var(--paper);
     }
-
-    button:active { transform: scale(0.98); }
-
-    .btn-complete {
-      background: var(--accent);
-      color: #1d3557;
-    }
-
-    .btn-complete.is-complete {
-      background: var(--done);
-      color: #fff;
-    }
-
-    .btn-photo {
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .btn-flip-back {
-      background: transparent;
+    .stop-subtitle {
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
       color: var(--muted);
-      font-size: 0.8rem;
-      padding: 0.5rem;
+      margin: 0.2rem 0 1.3rem;
     }
 
-    .photo-thumb-wrap {
-      display: none;
+    .challenge {
+      background: var(--paper);
+      color: #1b2d40;
+      border-radius: var(--radius);
+      padding: 1.2rem 1.25rem;
+      box-shadow: var(--shadow);
+      border-left: 8px solid var(--orange);
+      margin-bottom: 1.2rem;
+    }
+    .challenge .label {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.72rem;
+      color: var(--red);
       margin-bottom: 0.5rem;
     }
+    .challenge p { font-size: 1.08rem; line-height: 1.45; }
 
-    .photo-thumb-wrap.has-photo { display: block; }
-
-    .photo-thumb {
-      width: 100%;
-      max-height: 100px;
-      object-fit: cover;
-      border-radius: 10px;
-      border: 2px solid rgba(233, 196, 106, 0.4);
+    .directions {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.8rem;
+      color: var(--yellow);
+      text-decoration: none;
+      margin-bottom: 1.4rem;
+      border-bottom: 2px solid rgba(252, 204, 10, 0.4);
+      padding-bottom: 2px;
     }
 
-    .photo-label {
-      font-size: 0.72rem;
+    .photo-block { margin-bottom: 1.2rem; }
+    .photo-thumb-wrap { display: none; margin-bottom: 0.7rem; }
+    .photo-thumb-wrap.has-photo { display: block; }
+    .photo-thumb {
+      width: 100%;
+      max-height: 240px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      border: 6px solid var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .action-btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      font-family: "Oswald", sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.95rem;
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius);
+      width: 100%;
+      margin-bottom: 0.7rem;
+      transition: transform 0.12s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .action-btn:active { transform: scale(0.98); }
+    .btn-complete { background: var(--yellow); color: #13202e; }
+    .btn-complete.is-complete { background: var(--green); color: #fff; }
+    .btn-photo {
+      background: transparent;
+      color: var(--paper);
+      border: 2px solid var(--line);
+    }
+
+    /* bottom prev/next nav */
+    .pager {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 60;
+      background: rgba(19, 32, 46, 0.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--line);
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    .pager .wrap {
+      display: flex;
+      gap: 0.7rem;
+      padding-top: 0.7rem;
+      padding-bottom: 0.7rem;
+    }
+    .pager button {
+      flex: 1;
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.85rem;
+      padding: 0.8rem 0.5rem;
+      border-radius: var(--radius);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .pager .prev { background: rgba(242, 231, 207, 0.1); color: var(--paper); }
+    .pager .next { background: var(--orange); color: #13202e; flex: 1.6; }
+    .pager button:disabled { opacity: 0.35; cursor: default; }
+
+    /* ── FINISH ────────────────────────────────────────── */
+    #view-finish { align-items: center; justify-content: center; text-align: center; }
+    .finish-inner { padding: 2rem 1.5rem; max-width: 460px; }
+    .finish-inner .eyebrow { color: var(--orange); }
+    .finish-inner h1 {
+      font-family: "Anton", sans-serif;
+      text-transform: uppercase;
+      line-height: 0.9;
+      font-size: clamp(3rem, 16vw, 5rem);
+      color: var(--paper);
+      text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
+    }
+    .finish-inner h1 .hl { color: var(--yellow); }
+    .finish-inner p {
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
       color: var(--muted);
-      margin-top: 0.25rem;
+      margin: 1.2rem 0 2rem;
+      font-size: 1rem;
     }
 
     .footer {
       text-align: center;
-      padding: 0 1rem 2rem;
-      max-width: 520px;
-      margin: 0 auto;
+      padding: 1.5rem 0 2.5rem;
     }
-
     .btn-reset {
       background: transparent;
-      color: rgba(241, 250, 238, 0.5);
-      border: 1px solid rgba(241, 250, 238, 0.2);
-      font-size: 0.8rem;
-      padding: 0.6rem 1.2rem;
-    }
-
-    .celebration {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: rgba(15, 26, 46, 0.95);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-    }
-
-    .celebration.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .celebration-inner {
-      text-align: center;
-      max-width: 360px;
-    }
-
-    .celebration-inner h2 {
-      font-family: Georgia, serif;
-      font-size: 2rem;
-      color: var(--accent);
-      margin-bottom: 0.75rem;
-    }
-
-    .celebration-inner p {
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-      font-size: 1rem;
-    }
-
-    .btn-celebrate {
-      background: linear-gradient(135deg, var(--accent-2), var(--accent));
-      color: #1d3557;
-      padding: 0.9rem 2rem;
-      font-size: 1rem;
+      color: rgba(242, 231, 207, 0.5);
+      border: 1px solid rgba(242, 231, 207, 0.2);
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.74rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: var(--radius);
+      cursor: pointer;
     }
 
     input[type="file"] { display: none; }
-
-    @media (min-width: 600px) {
-      .header h1 { font-size: 1.6rem; }
-      .card-scene { height: 360px; }
-    }
   </style>
 </head>
 <body>
-  <header class="header">
-    <h1>Prospect Lefferts Gardens</h1>
-    <p>Neighborhood history scavenger hunt</p>
-    <div class="progress-wrap">
-      <div class="progress-meta">
-        <span id="progress-label">0 of 8 complete</span>
-        <span>Flatbush Ave</span>
+
+  <!-- ── WELCOME / HUB ─────────────────────────────────── -->
+  <section class="view active" id="view-welcome">
+    <div class="wrap">
+      <div class="hero">
+        <div class="eyebrow">Brooklyn · Est. 1660</div>
+        <h1>Prospect<br>Lefferts<span class="hl">Gardens</span></h1>
+        <div class="sub">A Neighborhood Heritage Hunt</div>
       </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
+
+      <div class="ticket">
+        <h2>How to ride</h2>
+        <p>Work your way down <strong>Flatbush Ave</strong> from Ocean to Church, tackling one stop at a time. Snap photos, mark each done, and end at the <strong>finish line</strong> for double Dutch.</p>
+      </div>
+
+      <button class="btn btn-go" id="btn-begin">Begin the Hunt &rarr;</button>
+
+      <div class="line-head">
+        <h3>The Line</h3>
+        <span id="line-count">0 / 8 stops</span>
+      </div>
+      <nav class="line" id="line-list"></nav>
+    </div>
+
+    <div class="footer">
+      <button class="btn-reset" id="btn-reset">Reset my hunt</button>
+    </div>
+  </section>
+
+  <!-- ── STOP PAGE (single, content swapped) ───────────── -->
+  <section class="view" id="view-stop">
+    <div class="topbar">
+      <div class="wrap">
+        <button class="nav-btn" id="btn-to-map">&larr; Map</button>
+        <span class="counter" id="stop-counter">Stop 1 / 8</span>
       </div>
     </div>
-  </header>
+    <div class="mini-progress"><div id="mini-fill"></div></div>
 
-  <main>
-    <div class="intro">
-      <strong>How to play:</strong> Tap a card to flip it and reveal your challenge.
-      Complete each stop along Flatbush from Ocean to Church, then head to the
-      <strong>finish line</strong> for double Dutch!
+    <div class="stop-page">
+      <div class="wrap" id="stop-content"><!-- rendered --></div>
     </div>
-    <div class="cards" id="cards"></div>
-  </main>
 
-  <footer class="footer">
-    <button class="btn-reset" id="btn-reset" type="button">Reset my hunt</button>
-  </footer>
-
-  <div class="celebration" id="celebration" aria-hidden="true">
-    <div class="celebration-inner">
-      <h2>You did it!</h2>
-      <p>All 8 stops conquered. Time to celebrate the Dutch roots — jump in that double Dutch rope!</p>
-      <button class="btn-celebrate" id="btn-celebrate-close" type="button">Keep exploring</button>
+    <div class="pager">
+      <div class="wrap">
+        <button class="prev" id="btn-prev">&larr; Prev</button>
+        <button class="next" id="btn-next">Next &rarr;</button>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- ── FINISH ────────────────────────────────────────── -->
+  <section class="view" id="view-finish">
+    <div class="finish-inner">
+      <div class="eyebrow">Last Stop</div>
+      <h1>You<br><span class="hl">Made It</span></h1>
+      <p>All 8 stops conquered. Now jump in that double Dutch rope and celebrate PLG.</p>
+      <button class="btn btn-go" id="btn-finish-map">Back to the Map</button>
+    </div>
+  </section>
 
   <script>
-    // ── Edit these values ──────────────────────────────────────────
+    // ── Edit these ─────────────────────────────────────
     const CONFIG = {
-      finishAddress: "Your home address, PLG Brooklyn",
+      finishAddress: "Your home, PLG Brooklyn",
       finishMapsQuery: "Prospect Lefferts Gardens Brooklyn NY"
     };
 
     const STOPS = [
       {
-        id: "history",
-        title: "A Bite of History",
-        subtitle: "James Lefferts & Black-owned Brooklyn",
-        cover: "images/history.jpg",
-        historicNote: "Lefferts Historic House — Dutch colonial roots of PLG",
+        id: "history", letter: "Q", line: "#fccc0a", darkText: true,
+        title: "A Bite of History", subtitle: "James Lefferts & Black-owned Brooklyn",
+        cover: "images/history.jpg", caption: "Lefferts Historic House — Dutch colonial PLG",
         challenge: "Bring the party an offering from a Black-owned business — enough to make ol' James Lefferts roll in his grave.",
-        photoHighlight: false,
-        bonus: false,
         mapsQuery: "Flatbush Avenue and Ocean Avenue Brooklyn NY"
       },
       {
-        id: "doubles",
-        title: "The Melting Pot",
-        subtitle: "Caribbean & African American PLG",
-        cover: "images/doubles.jpg",
-        historicNote: "Historic Flatbush, c. 1860s — stereoscopic view, NYPL",
+        id: "doubles", letter: "2", line: "#ee352e", darkText: false,
+        title: "The Melting Pot", subtitle: "Caribbean & African American PLG",
+        cover: "images/doubles.jpg", caption: "Historic Flatbush, c.1860s — NYPL",
         challenge: "Caribbean and African American families infused this neighborhood with culture, making it more of a melting pot than ever. Grab some doubles to honor both groups.",
-        photoHighlight: false,
-        bonus: false,
         mapsQuery: "Flatbush Avenue Brooklyn NY doubles roti"
       },
       {
-        id: "gentrifier",
-        title: "Gentrifier Watch",
-        subtitle: "Flatbush Ave commercial corridor",
-        cover: "images/gentrifier.svg",
-        historicNote: "Drop your own photo: save as images/gentrifier.jpg",
+        id: "gentrifier", letter: "5", line: "#00933c", darkText: false,
+        title: "Gentrifier Watch", subtitle: "Flatbush Ave commercial corridor",
+        cover: "images/gentrifier.svg", caption: "Drop your own photo: images/gentrifier.jpg",
         challenge: "What's the most gentrified business on Flatbush? Ask the staff how they foster community.",
-        photoHighlight: false,
-        bonus: false,
         mapsQuery: "Flatbush Avenue between Ocean Avenue and Church Avenue Brooklyn NY"
       },
       {
-        id: "beauty",
-        title: "Beauty Supply Remix",
-        subtitle: "Names shape identity",
-        cover: "images/beauty.svg",
-        historicNote: "Drop your own photo: save as images/beauty.jpg",
+        id: "beauty", letter: "B", line: "#ff6319", darkText: false,
+        title: "Beauty Supply Remix", subtitle: "Names shape identity",
+        cover: "images/beauty.svg", caption: "Drop your own photo: images/beauty.jpg",
         challenge: "What you name a place has transference into who it is. Find a wig that's misnamed and give it the personality it deserves.",
-        photoHighlight: true,
-        bonus: false,
         mapsQuery: "beauty supply Flatbush Avenue Brooklyn NY"
       },
       {
-        id: "storefronts",
-        title: "Ghosts of Storefronts",
-        subtitle: "Empty windows, big dreams",
-        cover: "images/storefronts.svg",
-        historicNote: "Grand Army Plaza fountain, Flatbush Ave converging, c. 1900",
+        id: "storefronts", letter: "A", line: "#1c5bd8", darkText: false,
+        title: "Ghosts of Storefronts", subtitle: "Empty windows, big dreams",
+        cover: "images/storefronts.svg", caption: "Grand Army Plaza, Flatbush Ave, c.1900",
         challenge: "Find a business that's closed. What should be there instead?",
-        photoHighlight: false,
-        bonus: false,
         mapsQuery: "Flatbush Avenue Brooklyn NY vacant storefront"
       },
       {
-        id: "flowers",
-        title: "Brooklyn in Bloom",
-        subtitle: "Native flora hunt",
-        cover: "images/flowers.svg",
-        historicNote: "Drop your own photo: save as images/flowers.jpg",
+        id: "flowers", letter: "G", line: "#6cbe45", darkText: true,
+        title: "Brooklyn in Bloom", subtitle: "Native flora hunt",
+        cover: "images/flowers.svg", caption: "Drop your own photo: images/flowers.jpg",
         challenge: "Capture photos of flowers native to Brooklyn — think coneflower, goldenrod, or milkweed growing wild nearby.",
-        photoHighlight: true,
-        bonus: false,
         mapsQuery: "Prospect Park Brooklyn native plants"
       },
       {
-        id: "coconut",
-        title: "Bonus: Coconut Water",
-        subtitle: "Nostrand Ave refreshment",
-        cover: "images/coconut.svg",
-        historicNote: "Labay Market — drop your own photo: images/coconut.jpg",
+        id: "coconut", letter: "7", line: "#b933ad", darkText: false, bonus: true,
+        title: "Bonus: Coconut Water", subtitle: "Nostrand Ave refreshment",
+        cover: "images/coconut.svg", caption: "Labay Market — images/coconut.jpg",
         challenge: "Acquire coconut water from the freshest source on Nostrand Ave — Labay Market.",
-        photoHighlight: false,
-        bonus: true,
         mapsQuery: "Labay Market Nostrand Avenue Brooklyn NY"
       },
       {
-        id: "dutch",
-        title: "Finish Line: Dutch Roots",
-        subtitle: CONFIG.finishAddress,
-        cover: "images/dutch.svg",
-        historicNote: "Celebrate PLG's Dutch heritage — and Brooklyn double Dutch culture",
+        id: "dutch", letter: "S", line: "#808183", darkText: false,
+        title: "Finish: Dutch Roots", subtitle: CONFIG.finishAddress,
+        cover: "images/dutch.svg", caption: "Celebrate PLG's Dutch heritage",
         challenge: "Celebrate the neighborhood's Dutch roots by getting a turn or a jump in a double Dutch rope!",
-        photoHighlight: true,
-        bonus: false,
         mapsQuery: CONFIG.finishMapsQuery
       }
     ];
@@ -545,53 +652,48 @@
 
     let db = null;
     let progress = {};
+    let currentIndex = 0;
+    const coverCache = {};
 
-    // ── IndexedDB ────────────────────────────────────────────────
+    // ── IndexedDB ──────────────────────────────────────
     function openDB() {
       return new Promise((resolve, reject) => {
         const req = indexedDB.open(DB_NAME, DB_VERSION);
         req.onupgradeneeded = (e) => {
-          const database = e.target.result;
-          if (!database.objectStoreNames.contains(STORE_NAME)) {
-            database.createObjectStore(STORE_NAME);
-          }
+          const d = e.target.result;
+          if (!d.objectStoreNames.contains(STORE_NAME)) d.createObjectStore(STORE_NAME);
         };
         req.onsuccess = () => resolve(req.result);
         req.onerror = () => reject(req.error);
       });
     }
-
-    async function savePhoto(stopId, dataUrl) {
+    async function savePhoto(id, dataUrl) {
       if (!db) db = await openDB();
-      return new Promise((resolve, reject) => {
+      return new Promise((res, rej) => {
         const tx = db.transaction(STORE_NAME, "readwrite");
-        tx.objectStore(STORE_NAME).put(dataUrl, stopId);
-        tx.oncomplete = () => resolve();
-        tx.onerror = () => reject(tx.error);
+        tx.objectStore(STORE_NAME).put(dataUrl, id);
+        tx.oncomplete = res; tx.onerror = () => rej(tx.error);
       });
     }
-
-    async function loadPhoto(stopId) {
+    async function loadPhoto(id) {
       if (!db) db = await openDB();
-      return new Promise((resolve, reject) => {
+      return new Promise((res, rej) => {
         const tx = db.transaction(STORE_NAME, "readonly");
-        const req = tx.objectStore(STORE_NAME).get(stopId);
-        req.onsuccess = () => resolve(req.result || null);
-        req.onerror = () => reject(req.error);
+        const r = tx.objectStore(STORE_NAME).get(id);
+        r.onsuccess = () => res(r.result || null);
+        r.onerror = () => rej(r.error);
       });
     }
-
     async function clearPhotos() {
       if (!db) db = await openDB();
-      return new Promise((resolve, reject) => {
+      return new Promise((res, rej) => {
         const tx = db.transaction(STORE_NAME, "readwrite");
         tx.objectStore(STORE_NAME).clear();
-        tx.oncomplete = () => resolve();
-        tx.onerror = () => reject(tx.error);
+        tx.oncomplete = res; tx.onerror = () => rej(tx.error);
       });
     }
 
-    // ── Photo processing ───────────────────────────────────────────
+    // ── Photo downscale ────────────────────────────────
     function downscaleImage(file, maxDim = 1200, quality = 0.82) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -600,16 +702,13 @@
           img.onload = () => {
             let { width, height } = img;
             if (width > maxDim || height > maxDim) {
-              const ratio = Math.min(maxDim / width, maxDim / height);
-              width = Math.round(width * ratio);
-              height = Math.round(height * ratio);
+              const r = Math.min(maxDim / width, maxDim / height);
+              width = Math.round(width * r); height = Math.round(height * r);
             }
-            const canvas = document.createElement("canvas");
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL("image/jpeg", quality));
+            const c = document.createElement("canvas");
+            c.width = width; c.height = height;
+            c.getContext("2d").drawImage(img, 0, 0, width, height);
+            resolve(c.toDataURL("image/jpeg", quality));
           };
           img.onerror = reject;
           img.src = e.target.result;
@@ -619,243 +718,213 @@
       });
     }
 
-    // ── Progress ───────────────────────────────────────────────────
+    // ── Progress ───────────────────────────────────────
     function loadProgress() {
-      try {
-        progress = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-      } catch {
-        progress = {};
+      try { progress = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+      catch { progress = {}; }
+    }
+    function saveProgress() { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
+    function isComplete(id) { return !!progress[id]; }
+    function completedCount() { return STOPS.filter(s => isComplete(s.id)).length; }
+
+    // ── Cover resolver (jpg/png/svg) ───────────────────
+    function resolveCover(basePath) {
+      if (coverCache[basePath] !== undefined) return Promise.resolve(coverCache[basePath]);
+      const exts = [".jpg", ".jpeg", ".png", ".webp", ".svg"];
+      const dot = basePath.lastIndexOf(".");
+      const stem = dot > -1 ? basePath.slice(0, dot) : basePath;
+      const cur = dot > -1 ? basePath.slice(dot) : "";
+      const cands = cur ? [basePath, ...exts.filter(e => e !== cur).map(e => stem + e)] : exts.map(e => stem + e);
+      return new Promise((resolve) => {
+        let i = 0;
+        (function tryNext() {
+          if (i >= cands.length) { coverCache[basePath] = null; resolve(null); return; }
+          const url = cands[i++];
+          const im = new Image();
+          im.onload = () => { coverCache[basePath] = url; resolve(url); };
+          im.onerror = tryNext;
+          im.src = url;
+        })();
+      });
+    }
+
+    function bulletHTML(stop, size) {
+      const s = size ? `style="width:${size};height:${size};font-size:calc(${size} * 0.5)"` : "";
+      return `<span class="bullet ${stop.darkText ? "dark-text" : ""}" ${s} style="background:${stop.line}${size ? `;width:${size};height:${size};font-size:calc(${size} * 0.52)` : ""}">${stop.letter}</span>`;
+    }
+
+    // ── Render hub list ────────────────────────────────
+    function renderHub() {
+      const list = document.getElementById("line-list");
+      list.innerHTML = STOPS.map((s, i) => `
+        <button class="stop-row ${isComplete(s.id) ? "done" : ""}" data-idx="${i}">
+          <span class="bullet ${s.darkText ? "dark-text" : ""}" style="background:${s.line}">${s.letter}</span>
+          <span class="meta">
+            <span class="name">${s.title}</span><br>
+            <span class="stopno">Stop ${i + 1}${s.bonus ? " · Bonus" : ""}</span>
+          </span>
+          <span class="check">&#10003;</span>
+          <span class="arrow">&rsaquo;</span>
+        </button>
+      `).join("");
+      list.querySelectorAll(".stop-row").forEach(row => {
+        row.addEventListener("click", () => goToStop(+row.dataset.idx));
+      });
+      document.getElementById("line-count").textContent = `${completedCount()} / ${STOPS.length} stops`;
+    }
+
+    // ── Render single stop page ────────────────────────
+    async function renderStop(i) {
+      const s = STOPS[i];
+      const done = isComplete(s.id);
+      const cover = await resolveCover(s.cover);
+      const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.mapsQuery)}`;
+
+      document.getElementById("stop-counter").textContent = `Stop ${i + 1} / ${STOPS.length}`;
+
+      const el = document.getElementById("stop-content");
+      el.innerHTML = `
+        <div class="cover-frame">
+          <div class="img" style="${cover ? `background-image:url('${cover}')` : ""}"></div>
+          <div class="cover-cap">${s.caption}</div>
+        </div>
+        <div class="stop-title-row">
+          <span class="bullet ${s.darkText ? "dark-text" : ""}" style="background:${s.line}">${s.letter}</span>
+          <h2>${s.title}</h2>
+        </div>
+        <div class="stop-subtitle">${s.subtitle}</div>
+        <div class="challenge">
+          <div class="label">Your Challenge</div>
+          <p>${s.challenge}</p>
+        </div>
+        <a class="directions" href="${mapsUrl}" target="_blank" rel="noopener">&#128205; Get directions</a>
+        <div class="photo-block">
+          <div class="photo-thumb-wrap" id="thumb-wrap">
+            <img class="photo-thumb" id="thumb" alt="Your photo">
+          </div>
+          <button class="action-btn btn-complete ${done ? "is-complete" : ""}" id="btn-complete">
+            ${done ? "\u2713 Completed" : "Mark complete"}
+          </button>
+          <button class="action-btn btn-photo" id="btn-photo">&#128247; Add photo</button>
+        </div>
+      `;
+
+      document.getElementById("btn-complete").addEventListener("click", () => toggleComplete(s.id));
+      document.getElementById("btn-photo").addEventListener("click", () => triggerPhotoInput(s.id));
+
+      const saved = await loadPhoto(s.id);
+      if (saved) {
+        document.getElementById("thumb").src = saved;
+        document.getElementById("thumb-wrap").classList.add("has-photo");
       }
+
+      document.getElementById("btn-prev").disabled = i === 0;
+      const nextBtn = document.getElementById("btn-next");
+      nextBtn.textContent = i === STOPS.length - 1 ? "Finish \u2192" : "Next \u2192";
+
+      updateMiniProgress();
+      window.scrollTo(0, 0);
     }
 
-    function saveProgress() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-    }
-
-    function isComplete(id) {
-      return !!progress[id];
+    function updateMiniProgress() {
+      const pct = (completedCount() / STOPS.length) * 100;
+      document.getElementById("mini-fill").style.width = pct + "%";
     }
 
     function toggleComplete(id) {
       progress[id] = !progress[id];
       saveProgress();
-      updateUI();
-    }
-
-    function completedCount() {
-      return STOPS.filter((s) => isComplete(s.id)).length;
-    }
-
-    function updateProgressBar() {
-      const count = completedCount();
-      const total = STOPS.length;
-      const pct = (count / total) * 100;
-      document.getElementById("progress-label").textContent = `${count} of ${total} complete`;
-      document.getElementById("progress-fill").style.width = `${pct}%`;
-
-      const celebration = document.getElementById("celebration");
-      if (count === total) {
-        celebration.classList.add("show");
-        celebration.setAttribute("aria-hidden", "false");
-      } else {
-        celebration.classList.remove("show");
-        celebration.setAttribute("aria-hidden", "true");
+      const btn = document.getElementById("btn-complete");
+      const done = isComplete(id);
+      btn.classList.toggle("is-complete", done);
+      btn.textContent = done ? "\u2713 Completed" : "Mark complete";
+      updateMiniProgress();
+      renderHub();
+      if (completedCount() === STOPS.length) {
+        setTimeout(() => { location.hash = "#finish"; }, 450);
       }
     }
 
-    // ── Cover image loader (tries jpg/png/svg) ─────────────────────
-    function resolveCover(basePath) {
-      const exts = [".jpg", ".jpeg", ".png", ".webp", ".svg"];
-      const dot = basePath.lastIndexOf(".");
-      const stem = dot > -1 ? basePath.slice(0, dot) : basePath;
-      const currentExt = dot > -1 ? basePath.slice(dot) : "";
-
-      const candidates = currentExt
-        ? [basePath, ...exts.filter((e) => e !== currentExt).map((e) => stem + e)]
-        : exts.map((e) => stem + e);
-
-      return new Promise((resolve) => {
-        let i = 0;
-        function tryNext() {
-          if (i >= candidates.length) {
-            resolve(null);
-            return;
-          }
-          const url = candidates[i++];
-          const img = new Image();
-          img.onload = () => resolve(url);
-          img.onerror = tryNext;
-          img.src = url;
-        }
-        tryNext();
-      });
-    }
-
-    // ── Render cards ───────────────────────────────────────────────
-    async function renderCards() {
-      const container = document.getElementById("cards");
-      container.innerHTML = "";
-
-      for (let idx = 0; idx < STOPS.length; idx++) {
-        const stop = STOPS[idx];
-        const done = isComplete(stop.id);
-        const coverUrl = await resolveCover(stop.cover);
-
-        const scene = document.createElement("div");
-        scene.className = `card-scene${done ? " is-done" : ""}`;
-        scene.dataset.id = stop.id;
-
-        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(stop.mapsQuery)}`;
-
-        scene.innerHTML = `
-          <div class="card" id="card-${stop.id}">
-            <div class="card-face card-front">
-              <div class="card-cover" style="${coverUrl ? `background-image:url('${coverUrl}')` : "background:linear-gradient(135deg,#264653,#e76f51)"}"></div>
-              <div class="card-front-overlay">
-                <span class="stop-number">Stop ${idx + 1}</span>
-                ${stop.bonus ? '<span class="bonus-badge">Bonus</span>' : ""}
-                <h2>${stop.title}</h2>
-                <p class="subtitle">${stop.subtitle}</p>
-                <span class="flip-hint">Tap to flip &rarr;</span>
-                ${stop.historicNote ? `<p class="historic-note">${stop.historicNote}</p>` : ""}
-              </div>
-              <div class="done-stamp">Done!</div>
-            </div>
-            <div class="card-face card-back">
-              <h3>${stop.title}</h3>
-              <p class="challenge-text">${stop.challenge}</p>
-              <a class="location-link" href="${mapsUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
-                &#128205; Get directions
-              </a>
-              <div class="photo-thumb-wrap" id="thumb-wrap-${stop.id}">
-                <img class="photo-thumb" id="thumb-${stop.id}" alt="Your photo for ${stop.title}">
-                <p class="photo-label">${stop.photoHighlight ? "📸 Photo challenge" : "Your snapshot"}</p>
-              </div>
-              <div class="card-actions">
-                <button class="btn-complete${done ? " is-complete" : ""}" data-action="complete" data-id="${stop.id}" type="button">
-                  ${done ? "✓ Completed" : "Mark complete"}
-                </button>
-                <button class="btn-photo" data-action="photo" data-id="${stop.id}" type="button">
-                  ${stop.photoHighlight ? "📸 Add challenge photo" : "Add photo"}
-                </button>
-                <button class="btn-flip-back" data-action="flip-back" type="button">← Flip back</button>
-              </div>
-            </div>
-          </div>
-        `;
-
-        container.appendChild(scene);
-
-        // Load saved photo thumbnail
-        const savedPhoto = await loadPhoto(stop.id);
-        if (savedPhoto) {
-          const wrap = scene.querySelector(`#thumb-wrap-${stop.id}`);
-          const thumb = scene.querySelector(`#thumb-${stop.id}`);
-          thumb.src = savedPhoto;
-          wrap.classList.add("has-photo");
-        }
-      }
-
-      bindCardEvents();
-      updateProgressBar();
-    }
-
-    function bindCardEvents() {
-      document.querySelectorAll(".card-scene").forEach((scene) => {
-        const card = scene.querySelector(".card");
-
-        scene.addEventListener("click", (e) => {
-          const action = e.target.closest("[data-action]");
-          if (action) {
-            e.stopPropagation();
-            const act = action.dataset.action;
-            const id = action.dataset.id;
-
-            if (act === "complete") {
-              toggleComplete(id);
-              scene.classList.toggle("is-done", isComplete(id));
-              action.classList.toggle("is-complete", isComplete(id));
-              action.textContent = isComplete(id) ? "✓ Completed" : "Mark complete";
-              updateProgressBar();
-            } else if (act === "photo") {
-              triggerPhotoInput(id);
-            } else if (act === "flip-back") {
-              card.classList.remove("flipped");
-              scene.classList.remove("flipped-scene");
-            }
-            return;
-          }
-
-          if (!card.classList.contains("flipped")) {
-            card.classList.add("flipped");
-            scene.classList.add("flipped-scene");
-          }
-        });
-      });
-    }
-
-    function triggerPhotoInput(stopId) {
+    // ── Photo input ────────────────────────────────────
+    function triggerPhotoInput(id) {
       let input = document.getElementById("photo-input");
       if (!input) {
         input = document.createElement("input");
-        input.type = "file";
-        input.id = "photo-input";
-        input.accept = "image/*";
-        input.capture = "environment";
+        input.type = "file"; input.id = "photo-input";
+        input.accept = "image/*"; input.capture = "environment";
         document.body.appendChild(input);
         input.addEventListener("change", handlePhotoSelected);
       }
-      input.dataset.stopId = stopId;
+      input.dataset.id = id;
       input.value = "";
       input.click();
     }
-
     async function handlePhotoSelected(e) {
       const file = e.target.files[0];
-      const stopId = e.target.dataset.stopId;
-      if (!file || !stopId) return;
-
+      const id = e.target.dataset.id;
+      if (!file || !id) return;
       try {
         const dataUrl = await downscaleImage(file);
-        await savePhoto(stopId, dataUrl);
-
-        const wrap = document.getElementById(`thumb-wrap-${stopId}`);
-        const thumb = document.getElementById(`thumb-${stopId}`);
-        if (wrap && thumb) {
-          thumb.src = dataUrl;
-          wrap.classList.add("has-photo");
+        await savePhoto(id, dataUrl);
+        if (STOPS[currentIndex].id === id) {
+          document.getElementById("thumb").src = dataUrl;
+          document.getElementById("thumb-wrap").classList.add("has-photo");
         }
       } catch (err) {
-        console.error("Photo save failed:", err);
+        console.error(err);
         alert("Couldn't save that photo. Try again?");
       }
     }
 
-    function updateUI() {
-      updateProgressBar();
+    // ── Routing ────────────────────────────────────────
+    function showView(id) {
+      document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+    function goToStop(i) { location.hash = `#stop/${i}`; }
+
+    function route() {
+      const h = location.hash;
+      if (h.startsWith("#stop/")) {
+        const i = Math.max(0, Math.min(STOPS.length - 1, parseInt(h.split("/")[1], 10) || 0));
+        currentIndex = i;
+        showView("view-stop");
+        renderStop(i);
+      } else if (h === "#finish") {
+        showView("view-finish");
+        window.scrollTo(0, 0);
+      } else {
+        showView("view-welcome");
+        renderHub();
+        window.scrollTo(0, 0);
+      }
     }
 
-    // ── Reset ──────────────────────────────────────────────────────
+    // ── Wire up ────────────────────────────────────────
+    document.getElementById("btn-begin").addEventListener("click", () => goToStop(0));
+    document.getElementById("btn-to-map").addEventListener("click", () => { location.hash = ""; });
+    document.getElementById("btn-finish-map").addEventListener("click", () => { location.hash = ""; });
+    document.getElementById("btn-prev").addEventListener("click", () => {
+      if (currentIndex > 0) goToStop(currentIndex - 1);
+    });
+    document.getElementById("btn-next").addEventListener("click", () => {
+      if (currentIndex < STOPS.length - 1) goToStop(currentIndex + 1);
+      else location.hash = "#finish";
+    });
     document.getElementById("btn-reset").addEventListener("click", async () => {
       if (!confirm("Reset all progress and photos on this device?")) return;
       progress = {};
       localStorage.removeItem(STORAGE_KEY);
       await clearPhotos();
-      document.querySelectorAll(".card").forEach((c) => c.classList.remove("flipped"));
-      document.querySelectorAll(".card-scene").forEach((s) => {
-        s.classList.remove("flipped-scene", "is-done");
-      });
-      await renderCards();
+      renderHub();
+      updateMiniProgress();
     });
 
-    document.getElementById("btn-celebrate-close").addEventListener("click", () => {
-      document.getElementById("celebration").classList.remove("show");
-    });
+    window.addEventListener("hashchange", route);
 
-    // ── Init ───────────────────────────────────────────────────────
     loadProgress();
-    openDB().then((database) => { db = database; }).catch(console.error);
-    renderCards();
+    openDB().then(d => { db = d; route(); }).catch(() => route());
+    renderHub();
   </script>
 </body>
 </html>

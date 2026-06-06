@@ -1,17 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Beauty supply storefront">
-  <defs>
-    <linearGradient id="pink" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ff6b9d"/>
-      <stop offset="50%" stop-color="#c44569"/>
-      <stop offset="100%" stop-color="#6c5ce7"/>
-    </linearGradient>
-  </defs>
-  <rect width="800" height="500" fill="url(#pink)"/>
-  <ellipse cx="400" cy="220" rx="180" ry="140" fill="#ffeaa7" opacity="0.9"/>
-  <path d="M280 220 Q400 80 520 220 Q400 360 280 220" fill="#2d3436" opacity="0.85"/>
-  <circle cx="340" cy="200" r="8" fill="#fdcb6e"/>
-  <circle cx="460" cy="200" r="8" fill="#fdcb6e"/>
-  <path d="M360 260 Q400 290 440 260" stroke="#e17055" stroke-width="4" fill="none"/>
-  <text x="400" y="420" text-anchor="middle" fill="#fff" font-family="Georgia, serif" font-size="24" font-weight="bold">Name It. Claim It.</text>
-  <text x="400" y="455" text-anchor="middle" fill="#ffeaa7" font-family="Georgia, serif" font-size="15">Beauty supply remix</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Beauty supply">
+  <rect width="800" height="600" fill="#b933ad"/>
+  <ellipse cx="400" cy="270" rx="190" ry="160" fill="#f2e7cf"/>
+  <path d="M250 270 Q400 90 550 270 Q400 450 250 270" fill="#13202e"/>
+  <circle cx="345" cy="250" r="10" fill="#fccc0a"/>
+  <circle cx="455" cy="250" r="10" fill="#fccc0a"/>
+  <path d="M360 320 Q400 355 440 320" stroke="#ff6319" stroke-width="6" fill="none"/>
+  <rect x="0" y="470" width="800" height="130" fill="#13202e"/>
+  <text x="400" y="540" text-anchor="middle" fill="#f2e7cf" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="bold" letter-spacing="3">NAME IT. CLAIM IT.</text>
 </svg>

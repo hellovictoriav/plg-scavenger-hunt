@@ -1,28 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Brooklyn native flowers">
-  <defs>
-    <linearGradient id="meadow" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#74b9ff"/>
-      <stop offset="60%" stop-color="#55efc4"/>
-      <stop offset="100%" stop-color="#00b894"/>
-    </linearGradient>
-  </defs>
-  <rect width="800" height="500" fill="url(#meadow)"/>
-  <circle cx="200" cy="280" r="35" fill="#e84393"/>
-  <circle cx="230" cy="250" r="30" fill="#fd79a8"/>
-  <circle cx="170" cy="250" r="30" fill="#fd79a8"/>
-  <circle cx="200" cy="220" r="30" fill="#fd79a8"/>
-  <circle cx="200" cy="280" r="18" fill="#fdcb6e"/>
-  <circle cx="500" cy="300" r="40" fill="#6c5ce7"/>
-  <circle cx="540" cy="265" r="32" fill="#a29bfe"/>
-  <circle cx="460" cy="265" r="32" fill="#a29bfe"/>
-  <circle cx="500" cy="230" r="32" fill="#a29bfe"/>
-  <circle cx="500" cy="300" r="20" fill="#ffeaa7"/>
-  <circle cx="650" cy="260" r="28" fill="#e17055"/>
-  <circle cx="680" cy="235" r="22" fill="#fab1a0"/>
-  <circle cx="620" cy="235" r="22" fill="#fab1a0"/>
-  <rect x="198" y="310" width="4" height="120" fill="#2d3436"/>
-  <rect x="498" y="335" width="4" height="95" fill="#2d3436"/>
-  <rect x="648" y="285" width="4" height="145" fill="#2d3436"/>
-  <text x="400" y="55" text-anchor="middle" fill="#2d3436" font-family="Georgia, serif" font-size="26" font-weight="bold">Brooklyn in Bloom</text>
-  <text x="400" y="480" text-anchor="middle" fill="#2d3436" font-family="Georgia, serif" font-size="14">Native wildflowers</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Brooklyn native flowers">
+  <rect width="800" height="600" fill="#2c4a6e"/>
+  <rect y="420" width="800" height="180" fill="#00933c"/>
+  <g>
+    <rect x="198" y="320" width="6" height="120" fill="#13202e"/>
+    <circle cx="201" cy="300" r="42" fill="#ee352e"/>
+    <circle cx="201" cy="300" r="18" fill="#fccc0a"/>
+  </g>
+  <g>
+    <rect x="398" y="350" width="6" height="90" fill="#13202e"/>
+    <circle cx="401" cy="320" r="46" fill="#fccc0a"/>
+    <circle cx="401" cy="320" r="18" fill="#ff6319"/>
+  </g>
+  <g>
+    <rect x="598" y="300" width="6" height="140" fill="#13202e"/>
+    <circle cx="601" cy="280" r="40" fill="#f2e7cf"/>
+    <circle cx="601" cy="280" r="16" fill="#ff6319"/>
+  </g>
+  <rect x="0" y="60" width="800" height="80" fill="#13202e"/>
+  <text x="400" y="116" text-anchor="middle" fill="#f2e7cf" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="bold" letter-spacing="3">BROOKLYN IN BLOOM</text>
 </svg>

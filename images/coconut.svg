@@ -1,19 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Fresh coconut water on Nostrand">
-  <defs>
-    <linearGradient id="trop" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#00cec9"/>
-      <stop offset="100%" stop-color="#0984e3"/>
-    </linearGradient>
-  </defs>
-  <rect width="800" height="500" fill="url(#trop)"/>
-  <ellipse cx="400" cy="300" rx="120" ry="140" fill="#6d4c41"/>
-  <ellipse cx="400" cy="280" rx="100" ry="120" fill="#8d6e63"/>
-  <path d="M340 200 Q400 120 460 200" stroke="#2e7d32" stroke-width="12" fill="none"/>
-  <path d="M360 190 Q400 100 440 190" stroke="#43a047" stroke-width="8" fill="none"/>
-  <rect x="520" y="180" width="180" height="220" rx="12" fill="#fff" opacity="0.9"/>
-  <rect x="540" y="210" width="140" height="30" rx="4" fill="#00b894"/>
-  <text x="610" y="280" text-anchor="middle" fill="#2d3436" font-family="Georgia, serif" font-size="18">LABAY</text>
-  <text x="610" y="310" text-anchor="middle" fill="#636e72" font-family="Georgia, serif" font-size="14">MARKET</text>
-  <text x="400" y="55" text-anchor="middle" fill="#fff" font-family="Georgia, serif" font-size="26" font-weight="bold">Nostrand Ave</text>
-  <text x="400" y="470" text-anchor="middle" fill="#dfe6e9" font-family="Georgia, serif" font-size="15">Bonus: freshest coconut water</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Fresh coconut water on Nostrand">
+  <rect width="800" height="600" fill="#00933c"/>
+  <ellipse cx="320" cy="340" rx="130" ry="150" fill="#13202e"/>
+  <ellipse cx="320" cy="320" rx="108" ry="128" fill="#2c4a6e"/>
+  <path d="M260 200 Q320 110 380 200" stroke="#f2e7cf" stroke-width="14" fill="none"/>
+  <rect x="500" y="200" width="210" height="250" rx="10" fill="#f2e7cf"/>
+  <rect x="520" y="232" width="170" height="40" fill="#ff6319"/>
+  <text x="605" y="262" text-anchor="middle" fill="#f2e7cf" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="bold">LABAY</text>
+  <text x="605" y="330" text-anchor="middle" fill="#13202e" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="bold">MARKET</text>
+  <text x="605" y="370" text-anchor="middle" fill="#2c4a6e" font-family="Arial, Helvetica, sans-serif" font-size="16">NOSTRAND AV</text>
+  <rect x="0" y="500" width="800" height="100" fill="#13202e"/>
+  <text x="400" y="562" text-anchor="middle" fill="#fccc0a" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="bold" letter-spacing="2">BONUS · FRESHEST ON NOSTRAND</text>
 </svg>
