@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#1d3557">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>PLG Scavenger Hunt</title>
+  <style>
+    :root {
+      --bg: #0f1a2e;
+      --surface: #1d3557;
+      --accent: #e9c46a;
+      --accent-2: #f4a261;
+      --accent-3: #2a9d8f;
+      --text: #f1faee;
+      --muted: #a8dadc;
+      --done: #2a9d8f;
+      --radius: 18px;
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background:
+        radial-gradient(ellipse at top, #264653 0%, transparent 60%),
+        radial-gradient(ellipse at bottom right, #e76f51 0%, transparent 40%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      line-height: 1.5;
+      padding-bottom: env(safe-area-inset-bottom, 24px);
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(168, 218, 220, 0.15);
+      padding: 1rem 1.25rem 0.85rem;
+    }
+
+    .header h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .header p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 0.2rem;
+    }
+
+    .progress-wrap {
+      margin-top: 0.85rem;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-3), var(--accent));
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
+    main {
+      padding: 1rem 1rem 2rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .intro {
+      background: rgba(29, 53, 87, 0.6);
+      border: 1px solid rgba(233, 196, 106, 0.2);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.92rem;
+    }
+
+    .intro strong { color: var(--accent); }
+
+    .cards { display: flex; flex-direction: column; gap: 1.1rem; }
+
+    .card-scene {
+      perspective: 1200px;
+      height: 340px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+    }
+
+    .card.flipped { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .card-front {
+      background: var(--surface);
+    }
+
+    .card-cover {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.3s ease;
+    }
+
+    .card-scene:not(.flipped-scene) .card-front:active .card-cover {
+      transform: scale(1.02);
+    }
+
+    .card-front-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(15, 26, 46, 0.92) 0%,
+        rgba(15, 26, 46, 0.35) 45%,
+        rgba(15, 26, 46, 0.15) 100%
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.1rem 1.2rem;
+    }
+
+    .stop-number {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(233, 196, 106, 0.95);
+      color: #1d3557;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 99px;
+      letter-spacing: 0.04em;
+    }
+
+    .bonus-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(42, 157, 143, 0.95);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.7rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .card-front h2 {
+      font-family: Georgia, serif;
+      font-size: 1.35rem;
+      line-height: 1.2;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-front .subtitle {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .flip-hint {
+      font-size: 0.75rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .historic-note {
+      font-size: 0.72rem;
+      color: rgba(241, 250, 238, 0.7);
+      margin-top: 0.35rem;
+      font-style: italic;
+    }
+
+    .done-stamp {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-12deg);
+      border: 4px solid var(--done);
+      color: var(--done);
+      font-weight: 900;
+      font-size: 1.6rem;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: rgba(15, 26, 46, 0.75);
+    }
+
+    .card-scene.is-done .done-stamp { opacity: 1; }
+
+    .card-back {
+      transform: rotateY(180deg);
+      background: linear-gradient(160deg, #1d3557 0%, #264653 100%);
+      padding: 1.1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .card-back h3 {
+      font-family: Georgia, serif;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .challenge-text {
+      font-size: 0.95rem;
+      flex: 1;
+      margin-bottom: 0.85rem;
+    }
+
+    .location-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-decoration: none;
+      margin-bottom: 0.85rem;
+      border-bottom: 1px solid rgba(168, 218, 220, 0.3);
+    }
+
+    .location-link:hover { color: var(--accent); }
+
+    .card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-top: auto;
+    }
+
+    button, .btn {
+      appearance: none;
+      border: none;
+      font: inherit;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    button:active { transform: scale(0.98); }
+
+    .btn-complete {
+      background: var(--accent);
+      color: #1d3557;
+    }
+
+    .btn-complete.is-complete {
+      background: var(--done);
+      color: #fff;
+    }
+
+    .btn-photo {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-flip-back {
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.8rem;
+      padding: 0.5rem;
+    }
+
+    .photo-thumb-wrap {
+      display: none;
+      margin-bottom: 0.5rem;
+    }
+
+    .photo-thumb-wrap.has-photo { display: block; }
+
+    .photo-thumb {
+      width: 100%;
+      max-height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid rgba(233, 196, 106, 0.4);
+    }
+
+    .photo-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 0 1rem 2rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .btn-reset {
+      background: transparent;
+      color: rgba(241, 250, 238, 0.5);
+      border: 1px solid rgba(241, 250, 238, 0.2);
+      font-size: 0.8rem;
+      padding: 0.6rem 1.2rem;
+    }
+
+    .celebration {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(15, 26, 46, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .celebration.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .celebration-inner {
+      text-align: center;
+      max-width: 360px;
+    }
+
+    .celebration-inner h2 {
+      font-family: Georgia, serif;
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .celebration-inner p {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+
+    .btn-celebrate {
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      color: #1d3557;
+      padding: 0.9rem 2rem;
+      font-size: 1rem;
+    }
+
+    input[type="file"] { display: none; }
+
+    @media (min-width: 600px) {
+      .header h1 { font-size: 1.6rem; }
+      .card-scene { height: 360px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Prospect Lefferts Gardens</h1>
+    <p>Neighborhood history scavenger hunt</p>
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span id="progress-label">0 of 8 complete</span>
+        <span>Flatbush Ave</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="intro">
+      <strong>How to play:</strong> Tap a card to flip it and reveal your challenge.
+      Complete each stop along Flatbush from Ocean to Church, then head to the
+      <strong>finish line</strong> for double Dutch!
+    </div>
+    <div class="cards" id="cards"></div>
+  </main>
+
+  <footer class="footer">
+    <button class="btn-reset" id="btn-reset" type="button">Reset my hunt</button>
+  </footer>
+
+  <div class="celebration" id="celebration" aria-hidden="true">
+    <div class="celebration-inner">
+      <h2>You did it!</h2>
+      <p>All 8 stops conquered. Time to celebrate the Dutch roots — jump in that double Dutch rope!</p>
+      <button class="btn-celebrate" id="btn-celebrate-close" type="button">Keep exploring</button>
+    </div>
+  </div>
+
+  <script>
+    // ── Edit these values ──────────────────────────────────────────
+    const CONFIG = {
+      finishAddress: "Your home address, PLG Brooklyn",
+      finishMapsQuery: "Prospect Lefferts Gardens Brooklyn NY"
+    };
+
+    const STOPS = [
+      {
+        id: "history",
+        title: "A Bite of History",
+        subtitle: "James Lefferts & Black-owned Brooklyn",
+        cover: "images/history.jpg",
+        historicNote: "Lefferts Historic House — Dutch colonial roots of PLG",
+        challenge: "Bring the party an offering from a Black-owned business — enough to make ol' James Lefferts roll in his grave.",
+        photoHighlight: false,
+        bonus: false,
+        mapsQuery: "Flatbush Avenue and Ocean Avenue Brooklyn NY"
+      },
+      {
+        id: "doubles",
+        title: "The Melting Pot",
+        subtitle: "Caribbean & African American PLG",
+        cover: "images/doubles.jpg",
+        historicNote: "Historic Flatbush, c. 1860s — stereoscopic view, NYPL",
+        challenge: "Caribbean and African American families infused this neighborhood with culture, making it more of a melting pot than ever. Grab some doubles to honor both groups.",
+        photoHighlight: false,
+        bonus: false,
+        mapsQuery: "Flatbush Avenue Brooklyn NY doubles roti"
+      },
+      {
+        id: "gentrifier",
+        title: "Gentrifier Watch",
+        subtitle: "Flatbush Ave commercial corridor",
+        cover: "images/gentrifier.svg",
+        historicNote: "Drop your own photo: save as images/gentrifier.jpg",
+        challenge: "What's the most gentrified business on Flatbush? Ask the staff how they foster community.",
+        photoHighlight: false,
+        bonus: false,
+        mapsQuery: "Flatbush Avenue between Ocean Avenue and Church Avenue Brooklyn NY"
+      },
+      {
+        id: "beauty",
+        title: "Beauty Supply Remix",
+        subtitle: "Names shape identity",
+        cover: "images/beauty.svg",
+        historicNote: "Drop your own photo: save as images/beauty.jpg",
+        challenge: "What you name a place has transference into who it is. Find a wig that's misnamed and give it the personality it deserves.",
+        photoHighlight: true,
+        bonus: false,
+        mapsQuery: "beauty supply Flatbush Avenue Brooklyn NY"
+      },
+      {
+        id: "storefronts",
+        title: "Ghosts of Storefronts",
+        subtitle: "Empty windows, big dreams",
+        cover: "images/storefronts.svg",
+        historicNote: "Grand Army Plaza fountain, Flatbush Ave converging, c. 1900",
+        challenge: "Find a business that's closed. What should be there instead?",
+        photoHighlight: false,
+        bonus: false,
+        mapsQuery: "Flatbush Avenue Brooklyn NY vacant storefront"
+      },
+      {
+        id: "flowers",
+        title: "Brooklyn in Bloom",
+        subtitle: "Native flora hunt",
+        cover: "images/flowers.svg",
+        historicNote: "Drop your own photo: save as images/flowers.jpg",
+        challenge: "Capture photos of flowers native to Brooklyn — think coneflower, goldenrod, or milkweed growing wild nearby.",
+        photoHighlight: true,
+        bonus: false,
+        mapsQuery: "Prospect Park Brooklyn native plants"
+      },
+      {
+        id: "coconut",
+        title: "Bonus: Coconut Water",
+        subtitle: "Nostrand Ave refreshment",
+        cover: "images/coconut.svg",
+        historicNote: "Labay Market — drop your own photo: images/coconut.jpg",
+        challenge: "Acquire coconut water from the freshest source on Nostrand Ave — Labay Market.",
+        photoHighlight: false,
+        bonus: true,
+        mapsQuery: "Labay Market Nostrand Avenue Brooklyn NY"
+      },
+      {
+        id: "dutch",
+        title: "Finish Line: Dutch Roots",
+        subtitle: CONFIG.finishAddress,
+        cover: "images/dutch.svg",
+        historicNote: "Celebrate PLG's Dutch heritage — and Brooklyn double Dutch culture",
+        challenge: "Celebrate the neighborhood's Dutch roots by getting a turn or a jump in a double Dutch rope!",
+        photoHighlight: true,
+        bonus: false,
+        mapsQuery: CONFIG.finishMapsQuery
+      }
+    ];
+
+    const STORAGE_KEY = "plg-hunt-progress";
+    const DB_NAME = "plg-hunt-photos";
+    const DB_VERSION = 1;
+    const STORE_NAME = "photos";
+
+    let db = null;
+    let progress = {};
+
+    // ── IndexedDB ────────────────────────────────────────────────
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, DB_VERSION);
+        req.onupgradeneeded = (e) => {
+          const database = e.target.result;
+          if (!database.objectStoreNames.contains(STORE_NAME)) {
+            database.createObjectStore(STORE_NAME);
+          }
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function savePhoto(stopId, dataUrl) {
+      if (!db) db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readwrite");
+        tx.objectStore(STORE_NAME).put(dataUrl, stopId);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      });
+    }
+
+    async function loadPhoto(stopId) {
+      if (!db) db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readonly");
+        const req = tx.objectStore(STORE_NAME).get(stopId);
+        req.onsuccess = () => resolve(req.result || null);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function clearPhotos() {
+      if (!db) db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readwrite");
+        tx.objectStore(STORE_NAME).clear();
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      });
+    }
+
+    // ── Photo processing ───────────────────────────────────────────
+    function downscaleImage(file, maxDim = 1200, quality = 0.82) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            let { width, height } = img;
+            if (width > maxDim || height > maxDim) {
+              const ratio = Math.min(maxDim / width, maxDim / height);
+              width = Math.round(width * ratio);
+              height = Math.round(height * ratio);
+            }
+            const canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL("image/jpeg", quality));
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // ── Progress ───────────────────────────────────────────────────
+    function loadProgress() {
+      try {
+        progress = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch {
+        progress = {};
+      }
+    }
+
+    function saveProgress() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    }
+
+    function isComplete(id) {
+      return !!progress[id];
+    }
+
+    function toggleComplete(id) {
+      progress[id] = !progress[id];
+      saveProgress();
+      updateUI();
+    }
+
+    function completedCount() {
+      return STOPS.filter((s) => isComplete(s.id)).length;
+    }
+
+    function updateProgressBar() {
+      const count = completedCount();
+      const total = STOPS.length;
+      const pct = (count / total) * 100;
+      document.getElementById("progress-label").textContent = `${count} of ${total} complete`;
+      document.getElementById("progress-fill").style.width = `${pct}%`;
+
+      const celebration = document.getElementById("celebration");
+      if (count === total) {
+        celebration.classList.add("show");
+        celebration.setAttribute("aria-hidden", "false");
+      } else {
+        celebration.classList.remove("show");
+        celebration.setAttribute("aria-hidden", "true");
+      }
+    }
+
+    // ── Cover image loader (tries jpg/png/svg) ─────────────────────
+    function resolveCover(basePath) {
+      const exts = [".jpg", ".jpeg", ".png", ".webp", ".svg"];
+      const dot = basePath.lastIndexOf(".");
+      const stem = dot > -1 ? basePath.slice(0, dot) : basePath;
+      const currentExt = dot > -1 ? basePath.slice(dot) : "";
+
+      const candidates = currentExt
+        ? [basePath, ...exts.filter((e) => e !== currentExt).map((e) => stem + e)]
+        : exts.map((e) => stem + e);
+
+      return new Promise((resolve) => {
+        let i = 0;
+        function tryNext() {
+          if (i >= candidates.length) {
+            resolve(null);
+            return;
+          }
+          const url = candidates[i++];
+          const img = new Image();
+          img.onload = () => resolve(url);
+          img.onerror = tryNext;
+          img.src = url;
+        }
+        tryNext();
+      });
+    }
+
+    // ── Render cards ───────────────────────────────────────────────
+    async function renderCards() {
+      const container = document.getElementById("cards");
+      container.innerHTML = "";
+
+      for (let idx = 0; idx < STOPS.length; idx++) {
+        const stop = STOPS[idx];
+        const done = isComplete(stop.id);
+        const coverUrl = await resolveCover(stop.cover);
+
+        const scene = document.createElement("div");
+        scene.className = `card-scene${done ? " is-done" : ""}`;
+        scene.dataset.id = stop.id;
+
+        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(stop.mapsQuery)}`;
+
+        scene.innerHTML = `
+          <div class="card" id="card-${stop.id}">
+            <div class="card-face card-front">
+              <div class="card-cover" style="${coverUrl ? `background-image:url('${coverUrl}')` : "background:linear-gradient(135deg,#264653,#e76f51)"}"></div>
+              <div class="card-front-overlay">
+                <span class="stop-number">Stop ${idx + 1}</span>
+                ${stop.bonus ? '<span class="bonus-badge">Bonus</span>' : ""}
+                <h2>${stop.title}</h2>
+                <p class="subtitle">${stop.subtitle}</p>
+                <span class="flip-hint">Tap to flip &rarr;</span>
+                ${stop.historicNote ? `<p class="historic-note">${stop.historicNote}</p>` : ""}
+              </div>
+              <div class="done-stamp">Done!</div>
+            </div>
+            <div class="card-face card-back">
+              <h3>${stop.title}</h3>
+              <p class="challenge-text">${stop.challenge}</p>
+              <a class="location-link" href="${mapsUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+                &#128205; Get directions
+              </a>
+              <div class="photo-thumb-wrap" id="thumb-wrap-${stop.id}">
+                <img class="photo-thumb" id="thumb-${stop.id}" alt="Your photo for ${stop.title}">
+                <p class="photo-label">${stop.photoHighlight ? "📸 Photo challenge" : "Your snapshot"}</p>
+              </div>
+              <div class="card-actions">
+                <button class="btn-complete${done ? " is-complete" : ""}" data-action="complete" data-id="${stop.id}" type="button">
+                  ${done ? "✓ Completed" : "Mark complete"}
+                </button>
+                <button class="btn-photo" data-action="photo" data-id="${stop.id}" type="button">
+                  ${stop.photoHighlight ? "📸 Add challenge photo" : "Add photo"}
+                </button>
+                <button class="btn-flip-back" data-action="flip-back" type="button">← Flip back</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(scene);
+
+        // Load saved photo thumbnail
+        const savedPhoto = await loadPhoto(stop.id);
+        if (savedPhoto) {
+          const wrap = scene.querySelector(`#thumb-wrap-${stop.id}`);
+          const thumb = scene.querySelector(`#thumb-${stop.id}`);
+          thumb.src = savedPhoto;
+          wrap.classList.add("has-photo");
+        }
+      }
+
+      bindCardEvents();
+      updateProgressBar();
+    }
+
+    function bindCardEvents() {
+      document.querySelectorAll(".card-scene").forEach((scene) => {
+        const card = scene.querySelector(".card");
+
+        scene.addEventListener("click", (e) => {
+          const action = e.target.closest("[data-action]");
+          if (action) {
+            e.stopPropagation();
+            const act = action.dataset.action;
+            const id = action.dataset.id;
+
+            if (act === "complete") {
+              toggleComplete(id);
+              scene.classList.toggle("is-done", isComplete(id));
+              action.classList.toggle("is-complete", isComplete(id));
+              action.textContent = isComplete(id) ? "✓ Completed" : "Mark complete";
+              updateProgressBar();
+            } else if (act === "photo") {
+              triggerPhotoInput(id);
+            } else if (act === "flip-back") {
+              card.classList.remove("flipped");
+              scene.classList.remove("flipped-scene");
+            }
+            return;
+          }
+
+          if (!card.classList.contains("flipped")) {
+            card.classList.add("flipped");
+            scene.classList.add("flipped-scene");
+          }
+        });
+      });
+    }
+
+    function triggerPhotoInput(stopId) {
+      let input = document.getElementById("photo-input");
+      if (!input) {
+        input = document.createElement("input");
+        input.type = "file";
+        input.id = "photo-input";
+        input.accept = "image/*";
+        input.capture = "environment";
+        document.body.appendChild(input);
+        input.addEventListener("change", handlePhotoSelected);
+      }
+      input.dataset.stopId = stopId;
+      input.value = "";
+      input.click();
+    }
+
+    async function handlePhotoSelected(e) {
+      const file = e.target.files[0];
+      const stopId = e.target.dataset.stopId;
+      if (!file || !stopId) return;
+
+      try {
+        const dataUrl = await downscaleImage(file);
+        await savePhoto(stopId, dataUrl);
+
+        const wrap = document.getElementById(`thumb-wrap-${stopId}`);
+        const thumb = document.getElementById(`thumb-${stopId}`);
+        if (wrap && thumb) {
+          thumb.src = dataUrl;
+          wrap.classList.add("has-photo");
+        }
+      } catch (err) {
+        console.error("Photo save failed:", err);
+        alert("Couldn't save that photo. Try again?");
+      }
+    }
+
+    function updateUI() {
+      updateProgressBar();
+    }
+
+    // ── Reset ──────────────────────────────────────────────────────
+    document.getElementById("btn-reset").addEventListener("click", async () => {
+      if (!confirm("Reset all progress and photos on this device?")) return;
+      progress = {};
+      localStorage.removeItem(STORAGE_KEY);
+      await clearPhotos();
+      document.querySelectorAll(".card").forEach((c) => c.classList.remove("flipped"));
+      document.querySelectorAll(".card-scene").forEach((s) => {
+        s.classList.remove("flipped-scene", "is-done");
+      });
+      await renderCards();
+    });
+
+    document.getElementById("btn-celebrate-close").addEventListener("click", () => {
+      document.getElementById("celebration").classList.remove("show");
+    });
+
+    // ── Init ───────────────────────────────────────────────────────
+    loadProgress();
+    openDB().then((database) => { db = database; }).catch(console.error);
+    renderCards();
+  </script>
+</body>
+</html>

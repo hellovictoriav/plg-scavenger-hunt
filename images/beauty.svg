@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Beauty supply storefront">
+  <defs>
+    <linearGradient id="pink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff6b9d"/>
+      <stop offset="50%" stop-color="#c44569"/>
+      <stop offset="100%" stop-color="#6c5ce7"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#pink)"/>
+  <ellipse cx="400" cy="220" rx="180" ry="140" fill="#ffeaa7" opacity="0.9"/>
+  <path d="M280 220 Q400 80 520 220 Q400 360 280 220" fill="#2d3436" opacity="0.85"/>
+  <circle cx="340" cy="200" r="8" fill="#fdcb6e"/>
+  <circle cx="460" cy="200" r="8" fill="#fdcb6e"/>
+  <path d="M360 260 Q400 290 440 260" stroke="#e17055" stroke-width="4" fill="none"/>
+  <text x="400" y="420" text-anchor="middle" fill="#fff" font-family="Georgia, serif" font-size="24" font-weight="bold">Name It. Claim It.</text>
+  <text x="400" y="455" text-anchor="middle" fill="#ffeaa7" font-family="Georgia, serif" font-size="15">Beauty supply remix</text>
+</svg>

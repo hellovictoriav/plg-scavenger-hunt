@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PLG Hunt QR Code</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f8f9fa;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 { font-size: 1.4rem; color: #1d3557; margin-bottom: 0.5rem; }
+    p { color: #555; margin-bottom: 1.5rem; max-width: 360px; }
+    img {
+      border: 8px solid #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      max-width: 280px;
+      width: 100%;
+    }
+    a { color: #2a9d8f; word-break: break-all; margin-top: 1.5rem; display: block; }
+    @media print {
+      body { background: #fff; }
+      img { box-shadow: none; border: 2px solid #ccc; }
+    }
+  </style>
+</head>
+<body>
+  <h1>PLG Scavenger Hunt</h1>
+  <p>Scan to join the hunt. Print this page for party day.</p>
+  <img
+    src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https%3A%2F%2Fwithgraphite.github.io%2Fvv-test-repo%2F"
+    alt="QR code for PLG Scavenger Hunt"
+    width="400"
+    height="400"
+  >
+  <a href="https://withgraphite.github.io/vv-test-repo/">https://withgraphite.github.io/vv-test-repo/</a>
+</body>
+</html>
