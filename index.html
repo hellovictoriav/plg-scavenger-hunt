@@ -110,7 +110,12 @@
     }
 
     /* ── WELCOME / HUB ────────────────────────────────── */
-    .hero { padding: 2.4rem 0 0.6rem; text-align: center; }
+    .hero { padding: 1.8rem 0 0.6rem; text-align: center; }
+    .brand-logo {
+      display: block; width: 132px; height: auto; margin: 0 auto 0.6rem;
+      filter: drop-shadow(0 2px 6px rgba(243, 235, 214, 0.9));
+    }
+    .finish-top .brand-logo { width: 92px; margin-bottom: 0.2rem; filter: none; }
     .eyebrow {
       font-family: var(--sign); text-transform: uppercase;
       letter-spacing: 0.32em; font-size: 0.72rem; font-weight: 600;
@@ -339,6 +344,16 @@
     .btn-complete { background: var(--mustard); color: var(--ink); border: 2px solid var(--sepia); }
     .btn-complete.is-complete { background: var(--green); color: var(--photo); border-color: var(--green); }
     .btn-photo { background: transparent; color: var(--ink); border: 2px solid var(--rule); }
+    .btn-share {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      text-decoration: none; background: var(--oxblood); color: var(--photo);
+      border: 2px solid var(--oxblood);
+    }
+    .photo-hint {
+      font-family: var(--sign); text-transform: uppercase; letter-spacing: 0.08em;
+      font-size: 0.62rem; color: var(--sepia); text-align: center;
+      margin: -0.2rem 0 0.2rem; line-height: 1.4;
+    }
 
     .pager {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
@@ -396,6 +411,7 @@
   <section class="view active" id="view-welcome">
     <div class="wrap">
       <div class="hero">
+        <img class="brand-logo" src="images/logo.png" alt="Handy Hunt">
         <div class="eyebrow">Brooklyn &middot; Est. 1660</div>
         <h1>Prospect Lefferts <span class="hl">Gardens</span></h1>
         <div class="sub">A Neighborhood Heritage Hunt</div>
@@ -445,6 +461,7 @@
   <!-- ── FINISH ───────────────────────────────────────── -->
   <section class="view" id="view-finish">
     <div class="finish-top">
+      <img class="brand-logo" src="images/logo.png" alt="Handy Hunt">
       <div class="eyebrow">Last Stop</div>
       <h1>You <span class="hl">Made It</span></h1>
     </div>
@@ -458,7 +475,8 @@
     // ── Edit these ─────────────────────────────────────
     const CONFIG = {
       finishAddress: "Your home, PLG Brooklyn",
-      finishMapsQuery: "Prospect Lefferts Gardens Brooklyn NY"
+      finishMapsQuery: "Prospect Lefferts Gardens Brooklyn NY",
+      albumUrl: "https://photos.app.goo.gl/3FtwNms8tFkrAVeE7"
     };
 
     const STOPS = [
@@ -717,6 +735,8 @@
             ${done ? "\u2713 Completed" : "Mark complete"}
           </button>
           <button class="action-btn btn-photo" id="btn-photo">&#128247; Add photo</button>
+          <a class="action-btn btn-share" href="${CONFIG.albumUrl}" target="_blank" rel="noopener">&#128248; Share to group album</a>
+          <div class="photo-hint">Adds your shot to everyone's shared album</div>
         </div>
       `;
 

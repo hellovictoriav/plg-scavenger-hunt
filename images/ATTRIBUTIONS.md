@@ -17,6 +17,7 @@ Other assets:
 - `welcome.jpg` — Prospect Park subway station (welcome-page full background)
 - `double-dutch.jpg` — Double Dutch jumpers on a Brooklyn street, B&W ("You Made It" finish-screen background)
 - `brooklyn-commons.jpg` — Bond Bread factory / clock tower (spare cover, unused)
+- `logo.png` — Handy Hunt brand logo (welcome + finish pages)
 
 ## Replace with your own photos
 
