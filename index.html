@@ -357,23 +357,25 @@
     .pager button:disabled { opacity: 0.35; cursor: default; }
 
     /* ── FINISH ───────────────────────────────────────── */
-    #view-finish { align-items: center; justify-content: center; text-align: center; padding: 1.5rem; }
-    .finish-inner {
-      padding: 2.2rem 1.7rem 2.4rem; max-width: 440px;
-      background: rgba(243, 235, 214, 0.9);
+    #view-finish { justify-content: space-between; align-items: center; text-align: center; padding: 1.5rem; }
+    .finish-top, .finish-bottom {
+      width: 100%; max-width: 440px;
+      padding: 1.6rem 1.7rem; border-radius: var(--radius);
+      background: rgba(243, 235, 214, 0.92);
       backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
-      border: 1px solid var(--rule); border-radius: var(--radius);
-      box-shadow: 0 16px 44px rgba(40, 28, 14, 0.45);
+      border: 1px solid var(--rule); box-shadow: 0 16px 44px rgba(40, 28, 14, 0.45);
     }
-    .finish-inner .eyebrow { color: var(--oxblood); }
-    .finish-inner h1 {
+    .finish-top { margin-top: 0.5rem; }
+    .finish-bottom { margin-bottom: 0.5rem; }
+    .finish-top .eyebrow { color: var(--oxblood); }
+    .finish-top h1 {
       font-family: var(--display); font-weight: 900; line-height: 0.98;
       font-size: clamp(2.8rem, 14vw, 4.4rem); color: var(--ink);
     }
-    .finish-inner h1 .hl { color: var(--oxblood); font-style: italic; }
-    .finish-inner p {
-      font-family: var(--serif); font-size: 1.2rem; color: var(--ink-soft);
-      margin: 1.1rem 0 2rem;
+    .finish-top h1 .hl { color: var(--oxblood); font-style: italic; }
+    .finish-bottom p {
+      font-family: var(--serif); font-size: 1.18rem; color: var(--ink-soft);
+      margin: 0 0 1.4rem;
     }
 
     .footer { text-align: center; padding: 0.5rem 0 2.5rem; }
@@ -442,10 +444,11 @@
 
   <!-- ── FINISH ───────────────────────────────────────── -->
   <section class="view" id="view-finish">
-    <div class="finish-inner">
+    <div class="finish-top">
       <div class="eyebrow">Last Stop</div>
       <h1>You <span class="hl">Made It</span></h1>
-      <hr class="rule">
+    </div>
+    <div class="finish-bottom">
       <p>All seven stops conquered. Now jump in that double Dutch rope and celebrate Prospect Lefferts Gardens.</p>
       <button class="btn btn-go" id="btn-finish-map">Back to the Map</button>
     </div>
