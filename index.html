@@ -69,7 +69,21 @@
       background: radial-gradient(ellipse 75% 60% at 50% 45%, transparent 55%, rgba(60, 40, 18, 0.22) 100%);
     }
 
-    .view { display: none; min-height: 100dvh; flex-direction: column; animation: fade 0.4s ease; }
+    /* full-page photo background layer */
+    #page-bg {
+      position: fixed; inset: 0; z-index: 0; display: none;
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      filter: sepia(0.35) contrast(1.03);
+    }
+
+    .view { display: none; min-height: 100dvh; flex-direction: column; animation: fade 0.4s ease; position: relative; z-index: 1; }
+
+    /* legibility for text sitting directly on a photo background */
+    #view-stop.has-pagebg .stop-title-row h2,
+    #view-stop.has-pagebg .stop-subtitle,
+    #view-stop.has-pagebg .directions {
+      text-shadow: 0 1px 0 rgba(243, 235, 214, 0.85), 0 0 16px rgba(243, 235, 214, 0.7);
+    }
     .view.active { display: flex; }
     @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 
@@ -113,28 +127,6 @@
       font-family: var(--sign); text-transform: uppercase;
       letter-spacing: 0.2em; font-size: 0.82rem; color: var(--sepia);
       margin-top: 0.8rem;
-    }
-
-    /* postcard hero photo */
-    .postcard {
-      background: var(--photo);
-      padding: 10px 10px 34px;
-      box-shadow: var(--shadow);
-      transform: rotate(-1.4deg);
-      margin: 1.6rem auto 1.8rem;
-      max-width: 92%;
-      border: 1px solid rgba(90,70,50,0.25);
-      position: relative;
-    }
-    .postcard img {
-      width: 100%; display: block;
-      filter: sepia(0.42) contrast(1.05) brightness(1.02);
-    }
-    .postcard figcaption {
-      position: absolute; bottom: 8px; left: 0; right: 0;
-      text-align: center; font-family: var(--sign);
-      text-transform: uppercase; letter-spacing: 0.14em;
-      font-size: 0.64rem; color: var(--sepia);
     }
 
     .ticket {
@@ -355,6 +347,7 @@
   </style>
 </head>
 <body>
+  <div id="page-bg" aria-hidden="true"></div>
 
   <!-- ── WELCOME / HUB ────────────────────────────────── -->
   <section class="view active" id="view-welcome">
@@ -364,11 +357,6 @@
         <h1>Prospect Lefferts <span class="hl">Gardens</span></h1>
         <div class="sub">A Neighborhood Heritage Hunt</div>
       </div>
-
-      <figure class="postcard">
-        <img src="images/welcome.jpg" alt="Prospect Park subway station, Brooklyn">
-        <figcaption>The line to Prospect Lefferts Gardens</figcaption>
-      </figure>
 
       <div class="ticket">
         <h2>How to ride</h2>
@@ -454,7 +442,7 @@
       {
         id: "beauty", letter: "B", line: "#b5602e", darkText: false, fit: "cover",
         title: "Beauty Supply Remix", subtitle: "Names shape identity",
-        cover: "images/beauty.svg", caption: "Drop your own photo: images/beauty.jpg",
+        cover: "images/beauty.jpg", caption: "The Charm Beauty Shop, 1938 (FSA, Library of Congress)",
         challenge: "What you name a place has transference into who it is. Find a wig that's misnamed and give it the personality it deserves.",
         mapsQuery: "beauty supply Flatbush Avenue Brooklyn NY"
       },
@@ -466,7 +454,7 @@
         mapsQuery: "Flatbush Avenue Brooklyn NY vacant storefront"
       },
       {
-        id: "flowers", letter: "G", line: "#6f7a3a", darkText: false, fit: "contain",
+        id: "flowers", letter: "M", line: "#6e4a2a", darkText: false, fit: "contain",
         title: "Brooklyn in Bloom", subtitle: "Native flora hunt",
         cover: "images/flowers.jpg", caption: "Tree-lined Maple St, PLG (NYC tax photo)",
         challenge: "Capture photos of flowers native to Brooklyn — think coneflower, goldenrod, or milkweed growing wild nearby.",
@@ -483,6 +471,7 @@
         id: "dutch", letter: "S", line: "#5a4632", darkText: false, fit: "cover",
         title: "Finish: Dutch Roots", subtitle: CONFIG.finishAddress,
         cover: "images/dutch.jpg", caption: "Ebbets Field, Brooklyn — home of the Dodgers",
+        pageBg: "images/double-dutch.jpg",
         challenge: "Celebrate the neighborhood's Dutch roots by getting a turn or a jump in a double Dutch rope!",
         mapsQuery: CONFIG.finishMapsQuery
       }
@@ -611,21 +600,40 @@
       document.getElementById("line-count").textContent = `${completedCount()} / ${STOPS.length} stops`;
     }
 
+    // ── Page background ────────────────────────────────
+    function setPageBg(spec) {
+      const el = document.getElementById("page-bg");
+      if (!spec) { el.style.display = "none"; el.style.backgroundImage = ""; return; }
+      el.style.backgroundImage = spec;
+      el.style.display = "block";
+    }
+
     // ── Render single stop page ────────────────────────
     async function renderStop(i) {
       const s = STOPS[i];
       const done = isComplete(s.id);
-      const cover = await resolveCover(s.cover);
+      const view = document.getElementById("view-stop");
       const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.mapsQuery)}`;
 
       document.getElementById("stop-counter").textContent = `Stop ${i + 1} / ${STOPS.length}`;
 
-      const el = document.getElementById("stop-content");
-      el.innerHTML = `
+      let coverHtml = "";
+      if (s.pageBg) {
+        setPageBg(`linear-gradient(rgba(232,220,192,0.42), rgba(232,220,192,0.6)), url('${s.pageBg}')`);
+        view.classList.add("has-pagebg");
+      } else {
+        const cover = await resolveCover(s.cover);
+        coverHtml = `
         <figure class="cover-frame">
           <img class="cover-img fit-${s.fit || "cover"}" ${cover ? `src="${cover}"` : ""} alt="${s.title}">
           <figcaption class="cover-cap">${s.caption}</figcaption>
-        </figure>
+        </figure>`;
+        setPageBg(null);
+        view.classList.remove("has-pagebg");
+      }
+
+      const el = document.getElementById("stop-content");
+      el.innerHTML = `${coverHtml}
         <div class="stop-title-row">
           <span class="bullet ${s.darkText ? "dark-text" : ""}" style="background:${s.line}">${s.letter}</span>
           <h2>${s.title}</h2>
@@ -728,9 +736,11 @@
         showView("view-stop");
         renderStop(i);
       } else if (h === "#finish") {
+        setPageBg(null);
         showView("view-finish");
         window.scrollTo(0, 0);
       } else {
+        setPageBg(`linear-gradient(rgba(232,220,192,0.6), rgba(232,220,192,0.82)), url('images/welcome.jpg')`);
         showView("view-welcome");
         renderHub();
         window.scrollTo(0, 0);
