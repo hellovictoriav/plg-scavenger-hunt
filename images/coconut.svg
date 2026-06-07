@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Fresh coconut water on Nostrand">
-  <rect width="800" height="600" fill="#00933c"/>
-  <ellipse cx="320" cy="340" rx="130" ry="150" fill="#13202e"/>
-  <ellipse cx="320" cy="320" rx="108" ry="128" fill="#2c4a6e"/>
-  <path d="M260 200 Q320 110 380 200" stroke="#f2e7cf" stroke-width="14" fill="none"/>
-  <rect x="500" y="200" width="210" height="250" rx="10" fill="#f2e7cf"/>
-  <rect x="520" y="232" width="170" height="40" fill="#ff6319"/>
-  <text x="605" y="262" text-anchor="middle" fill="#f2e7cf" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="bold">LABAY</text>
-  <text x="605" y="330" text-anchor="middle" fill="#13202e" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="bold">MARKET</text>
-  <text x="605" y="370" text-anchor="middle" fill="#2c4a6e" font-family="Arial, Helvetica, sans-serif" font-size="16">NOSTRAND AV</text>
-  <rect x="0" y="500" width="800" height="100" fill="#13202e"/>
-  <text x="400" y="562" text-anchor="middle" fill="#fccc0a" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="bold" letter-spacing="2">BONUS · FRESHEST ON NOSTRAND</text>
+  <rect width="800" height="600" fill="#d8c8a4"/>
+  <rect x="40" y="40" width="720" height="520" fill="none" stroke="#5a4632" stroke-width="6"/>
+  <ellipse cx="310" cy="350" rx="120" ry="140" fill="#3a2e1e"/>
+  <ellipse cx="310" cy="332" rx="98" ry="118" fill="#5a4632"/>
+  <path d="M255 215 Q310 130 365 215" stroke="#6f7a3a" stroke-width="13" fill="none"/>
+  <rect x="490" y="215" width="200" height="240" rx="8" fill="#efe6cf"/>
+  <rect x="510" y="246" width="160" height="38" fill="#8c3b2b"/>
+  <text x="590" y="274" text-anchor="middle" fill="#efe6cf" font-family="Georgia, serif" font-size="24" font-weight="bold">LABAY</text>
+  <text x="590" y="338" text-anchor="middle" fill="#3a2e1e" font-family="Georgia, serif" font-size="22" font-weight="bold">MARKET</text>
+  <text x="590" y="376" text-anchor="middle" fill="#6b4f2a" font-family="Georgia, serif" font-size="15" letter-spacing="1">NOSTRAND AV</text>
+  <text x="400" y="525" text-anchor="middle" fill="#3a2e1e" font-family="Georgia, serif" font-size="22" font-style="italic">Freshest on Nostrand</text>
 </svg>

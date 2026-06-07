@@ -1,25 +1,23 @@
-# Cover Photo Attributions
+# Cover Photos
 
-Historic images included in this scavenger hunt (public domain / openly licensed):
+Historic Brooklyn photos supplied by the host (NYC tax photos, archival prints, and postcards). Most NYC Municipal Archives tax photos and pre-1930 images are public domain; verify before any commercial reuse.
 
-| File | Source | License |
-|------|--------|---------|
-| `history.jpg` | [Lefferts House in Brooklyn](https://commons.wikimedia.org/wiki/File:Lefferts_House_in_Brooklyn.JPG) — Wikimedia Commons | CC BY-SA 3.0 |
-| `doubles.jpg` | [Penitentiary, Flatbush, L.I.](https://commons.wikimedia.org/wiki/File:Penitentary_(penitentiary),_Flatbush,_L.I,_from_Robert_N._Dennis_collection_of_stereoscopic_views.jpg) — NYPL / Robert N. Dennis collection | Public domain |
+| Stop | File | Image |
+|------|------|-------|
+| A Bite of History | `history.jpg` | Lefferts Historic House (Dutch colonial homestead) |
+| The Melting Pot | `doubles.jpg` | 563 Flatbush Ave apartment row, early 1900s |
+| Gentrifier Watch | `gentrifier.jpg` | 534 Flatbush Ave — 1940s & 1980s tax records |
+| Beauty Supply Remix | `beauty.svg` | Themed illustration (no historic photo) |
+| Ghosts of Storefronts | `storefronts.jpg` | Arthur's Market, Flatbush — thriving then shuttered |
+| Brooklyn in Bloom | `flowers.jpg` | Tree-lined Maple St (NYC tax photo) |
+| Bonus: Coconut Water | `coconut.svg` | Themed illustration (no historic photo) |
+| Finish: Dutch Roots | `dutch.jpg` | Ebbets Field postcard, Brooklyn |
+
+Other assets:
+
+- `welcome.jpg` — Prospect Park subway station (welcome-page postcard)
+- `brooklyn-commons.jpg` — Bond Bread factory / clock tower (spare cover, unused)
 
 ## Replace with your own photos
 
-Drop a JPG or PNG into this folder using the filename below. The site tries `.jpg`, `.jpeg`, `.png`, `.webp`, then `.svg` automatically.
-
-| Stop | Preferred filename |
-|------|-------------------|
-| A Bite of History | `history.jpg` |
-| The Melting Pot | `doubles.jpg` |
-| Gentrifier Watch | `gentrifier.jpg` |
-| Beauty Supply Remix | `beauty.jpg` |
-| Ghosts of Storefronts | `storefronts.jpg` |
-| Brooklyn in Bloom | `flowers.jpg` |
-| Bonus: Coconut Water | `coconut.jpg` |
-| Finish Line: Dutch Roots | `dutch.jpg` |
-
-After adding images, commit and push — guests will see them on refresh.
+Drop a JPG or PNG into this folder using the stop's filename above. The site tries `.jpg`, `.jpeg`, `.png`, `.webp`, then `.svg`, so a new `history.jpg` automatically replaces the current one. After adding images, commit and push — guests see them on refresh.

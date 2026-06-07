@@ -1,6 +1,6 @@
 # PLG Scavenger Hunt
 
-An interactive mobile microsite for a Prospect Lefferts Gardens neighborhood scavenger hunt. Guests flip cards to reveal challenges, track progress on their phone, and snap photos along Flatbush Avenue.
+An interactive mobile microsite for a Prospect Lefferts Gardens neighborhood scavenger hunt, styled like a vintage Brooklyn photo archive. Guests move through a welcome "subway map" hub into one full page per challenge, tracking progress on their phone and snapping photos along Flatbush Avenue.
 
 ## Live site
 
@@ -11,10 +11,11 @@ Share that link or the QR code in [`qr.html`](qr.html) with your guests.
 ## How guests use it
 
 1. Open the link on a phone (works in any mobile browser).
-2. Tap a card to **flip** it and reveal the challenge.
-3. Tap **Mark complete** when finished with a stop.
-4. Tap **Add photo** to capture challenge snapshots (saved on their device only).
-5. Complete all 8 stops to trigger the celebration screen.
+2. On the welcome page, tap **Begin the Hunt** or pick any stop from **The Line**.
+3. Each challenge is its own full page — read it, then use **Prev / Next** to move along.
+4. Tap **Mark complete** when finished with a stop.
+5. Tap **Add photo** to capture challenge snapshots (saved on their device only).
+6. Complete all 8 stops to reach the celebration screen.
 
 ## Edit stops or your home address
 
@@ -52,5 +53,5 @@ Tap **Reset my hunt** at the bottom of the site to clear progress and photos on 
 | File | Purpose |
 |------|---------|
 | `index.html` | Entire microsite (HTML, CSS, JS) |
-| `images/` | Cover photos for card fronts |
+| `images/` | Historic cover photos, one per stop |
 | `qr.html` | Printable QR code for sharing |
