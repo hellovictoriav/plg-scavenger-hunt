@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#e8dcc0">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>PLG Heritage Hunt</title>
+  <title>Deep in the Bush</title>
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -156,7 +156,8 @@
       letter-spacing: 0.12em; font-size: 0.82rem; font-weight: 700;
       margin-bottom: 0.4rem; color: var(--oxblood);
     }
-    .ticket p { font-family: "Montserrat", sans-serif; font-size: 1rem; line-height: 1.6; font-weight: 400; }
+    .ticket p { font-family: "Montserrat", sans-serif; font-size: 0.98rem; line-height: 1.6; font-weight: 400; }
+    .ticket p + p { margin-top: 0.8rem; }
     .ticket strong { color: var(--ink); font-weight: 600; }
 
     .btn {
@@ -415,13 +416,16 @@
       <div class="hero">
         <img class="brand-logo" src="images/logo.png" alt="Handy Hunt">
         <div class="eyebrow">Brooklyn &middot; Est. 1660</div>
-        <h1>Prospect Lefferts <span class="hl">Gardens</span></h1>
+        <h1>Deep in the <span class="hl">Bush</span></h1>
         <div class="sub">A Neighborhood Heritage Hunt</div>
       </div>
 
       <div class="ticket">
-        <h2>How to ride</h2>
-        <p>Work your way down <strong>Flatbush Ave</strong> from Ocean to Church, tackling one stop at a time. Snap photos, mark each done, and end at the <strong>finish line</strong> for double Dutch.</p>
+        <h2>All Aboard</h2>
+        <p>Listen up friends! Grab your crew of 3 or 4 &mdash; you're riding the <strong>Flatbush Local</strong> today. This above-ground map will take you up and down the avenue that built Brooklyn, broke Brooklyn, fed Brooklyn, and is currently arguing with itself about who Brooklyn is even for. Your final destination is the <strong>Handy Mansion</strong>, where our dear conductor will be waiting, ready to crown the victors.</p>
+        <p>The team that wins the most challenges will be named <strong>PLG Royalty</strong> and awarded prizes of genuinely questionable value, largely sourced from the depths of my home. You didn't come for the prizes. You came for the glory.</p>
+        <p><strong>A note on strategy:</strong> The clues do not have to be completed in order &mdash; in fact, Handy Hunt Enterprises&trade; strongly encourages you to study the full list before you set out and plot your path like the tactical geniuses you are. Or don't. Just wander. Flatbush has been surprising people for 400 years.</p>
+        <p>Now get out there. Happy Hunting. &#127937;</p>
       </div>
 
       <button class="btn btn-go" id="btn-begin">Begin the Hunt &rarr;</button>
@@ -493,7 +497,7 @@
       },
       {
         id: "bondbread", letter: "D", line: "#9a6a32", darkText: false, fit: "contain",
-        title: "The Bond Bread Bakery Building", subtitle: "Better by far",
+        title: "Breaking Bread", subtitle: "Better by far",
         location: "Flatbush Ave, heading south from Parkside Ave",
         cover: "images/bond-bread.jpg", caption: "Bond Bread factory sign, Flatbush Ave — \u201cBetter By Far\u201d",
         history: "Built between 1924 and 1925, this was the Bond Bread Bakery. Locals pushed back hard on what they saw as an oversized industrial intrusion on their residential neighborhood. Then the ovens fired up. The smell of fresh bread drifting down Flatbush Avenue did more for community relations than any public hearing could. By the time the bakery closed in 1996, it had been scenting the neighborhood for seven decades.",
@@ -502,7 +506,7 @@
       },
       {
         id: "doubles", letter: "2", line: "#8c3b2b", darkText: false, fit: "cover",
-        title: "Doubles for the Diaspora", subtitle: "The Little Caribbean",
+        title: "Double the Fun", subtitle: "The Little Caribbean",
         cover: "images/doubles.jpg", caption: "Flatbush Ave apartment row, early 1900s",
         history: "Beginning in the 1950s and '60s, Caribbean and African American families transformed this neighborhood — now recognized as The Little Caribbean, home to the largest and most diverse Caribbean-American community outside the West Indies. Doubles traces back further: indentured laborers from India were brought to Trinidad to work the sugar plantations after slavery's abolition in 1838, and the dish was invented in the 1930s by Emamool Deen and his wife Raheman Rasulan Deen of Princes Town — first sold as channa and bara. That's three diaspora communities in one sandwich.",
         challenge: "Everyone gets doubles. Before eating, each person explains — in one sentence — what their doubles represent about the communities who built this neighborhood. Then eat. No fork allowed.",
@@ -519,7 +523,7 @@
       },
       {
         id: "gentrifier", letter: "5", line: "#4f6b3a", darkText: false, fit: "contain",
-        title: "Most Gentrified on Flatbush", subtitle: "A block in transition",
+        title: "The Hipsters Are Coming", subtitle: "A block in transition",
         cover: "images/gentrifier.jpg", caption: "534 Flatbush Ave — 1940s & 1980s tax photos",
         history: "The businesses that arrive and thrive on a block say a lot about a neighborhood in transition. 705 Flatbush Ave is instructive: it housed Parkside, a craft-cocktail and Neapolitan pizza bar that opened in 2015 and later closed, followed by Black Nile, a beloved Black-owned soul food spot that was also eventually displaced. The address itself is a whole story.",
         challenge: "Each person nominates one currently operating business as the most gentrified on the strip. The group votes, then you go in and ask a staff member: 'How does this business foster community with the people who've always been here?' Report back honestly — no judgment on the answer, just witness it.",
@@ -527,11 +531,11 @@
       },
       {
         id: "storefronts", letter: "A", line: "#3a5a7a", darkText: false, fit: "contain",
-        title: "What Should Be Here?", subtitle: "Every empty storefront is a story",
+        title: "Build Back Blacker", subtitle: "Every empty storefront is a story",
         location: "A vacant or shuttered storefront on Flatbush Ave",
         cover: "images/storefronts.jpg", caption: "Arthur's Market, Flatbush — then & shuttered",
-        history: "Every empty storefront is a story. Business owners along Flatbush between Parkside Avenue and Empire Boulevard began organizing into a merchant association in 2012 precisely because so many felt the threat of displacement — working collectively to protect their leases and represent their interests in local and state government. Need a candidate? 705 Flatbush (from the last stop) has cycled through multiple closures and sits at the heart of that tension.",
-        challenge: "Stand in front of the closed storefront. Each person pitches what should go there — it has to serve the community that's been here, not the one arriving. One minute each, then the group votes. Write the winning idea on paper and photograph it in the window.",
+        history: "The businesses on this avenue have always told you who holds the power. In the first half of the 20th century, Flatbush's commercial corridors were dominated by largely Jewish and Italian communities. Then the neighborhood shifted — the population went from 89% white in 1970 to 30% white in a single decade, as Afro-Caribbean immigrants joined African Americans moving into Flatbush, and the commercial properties shifted to reflect that change. Caribbean and Black-owned businesses built the avenue's character from the ground up. But owning a business and owning the building are two different things — and that gap is where gentrification lives. In early 2025, eight businesses on a nearby block — a deli, pizzeria, barbershop, bookstore café, and others — were handed vacate orders by their landlord with no warning, apparently to make way for new development. Xander's Barbershop had operated there for 12 years. Across the broader Flatbush district, 71% of residents are African American and 46% are foreign-born. The people who live here and the people who own the buildings they shop in are increasingly not the same people.",
+        challenge: "Stand in front of a closed storefront. Pitch what should go there — it has to serve the community that's been here, not the one arriving. Record and upload it, and we'll vote on the winner all together.",
         mapsQuery: "Flatbush Avenue Brooklyn NY vacant storefront"
       },
       {
@@ -539,8 +543,8 @@
         title: "Brooklyn in Bloom", subtitle: "Native flora hunt",
         location: "Prospect Park edge or any green median along Flatbush",
         cover: "images/flowers.jpg", caption: "Tree-lined Maple St, PLG (NYC tax photo)",
-        history: "Long before Leffert Pietersen arrived in 1660, this land had its own ecology. Brooklyn's native plants still persist along the park edge and in the green medians right here on Flatbush.",
-        challenge: "Photograph as many native Brooklyn flowering plants as you can find. Look for Black-Eyed Susans (golden-yellow petals, dark centers), New England Aster (purple-pink late blooms), and Wild Columbine (red-and-yellow drooping flowers). Most species wins. Bonus point: find something growing out of concrete.",
+        history: "Long before Leffert Pietersen arrived in 1660, this land had its own ecology. Brooklyn's native plants and birds still persist along the park edge and in the green medians right here on Flatbush.",
+        challenge: "Photograph as many native plants and chirping birds as you can find. Look for Black-Eyed Susans (golden-yellow petals, dark centers), New England Aster (purple-pink late blooms), and Wild Columbine (red-and-yellow drooping flowers). Most species wins. Bonus point: find something growing out of concrete.",
         mapsQuery: "Prospect Park Brooklyn native plants"
       },
       {
