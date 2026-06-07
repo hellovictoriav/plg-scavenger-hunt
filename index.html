@@ -81,10 +81,7 @@
     /* legibility for text sitting directly on a photo background */
     #view-stop.has-pagebg .stop-title-row h2,
     #view-stop.has-pagebg .stop-subtitle,
-    #view-stop.has-pagebg .directions,
-    #view-finish .finish-inner h1,
-    #view-finish .finish-inner p,
-    #view-finish .eyebrow {
+    #view-stop.has-pagebg .directions {
       text-shadow: 0 1px 0 rgba(243, 235, 214, 0.85), 0 0 16px rgba(243, 235, 214, 0.7);
     }
     .view.active { display: flex; }
@@ -360,8 +357,14 @@
     .pager button:disabled { opacity: 0.35; cursor: default; }
 
     /* ── FINISH ───────────────────────────────────────── */
-    #view-finish { align-items: center; justify-content: center; text-align: center; }
-    .finish-inner { padding: 2rem 1.5rem; max-width: 480px; }
+    #view-finish { align-items: center; justify-content: center; text-align: center; padding: 1.5rem; }
+    .finish-inner {
+      padding: 2.2rem 1.7rem 2.4rem; max-width: 440px;
+      background: rgba(243, 235, 214, 0.9);
+      backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+      border: 1px solid var(--rule); border-radius: var(--radius);
+      box-shadow: 0 16px 44px rgba(40, 28, 14, 0.45);
+    }
     .finish-inner .eyebrow { color: var(--oxblood); }
     .finish-inner h1 {
       font-family: var(--display); font-weight: 900; line-height: 0.98;
@@ -516,15 +519,6 @@
         history: "The Dutch founded this neighborhood in 1660. Double Dutch — the rope-jumping tradition developed and elevated by Black children in New York City — became a global art form and a signature expression of Brooklyn street culture. It belongs to this neighborhood as much as any brownstone.",
         challenge: "Find or bring a jump rope. Everyone takes a turn in the double Dutch rope — or attempts it. Whoever lasts longest gets to name one stop on next year's hunt.",
         mapsQuery: CONFIG.finishMapsQuery
-      },
-      {
-        id: "coconut", letter: "7", line: "#6e3f5e", darkText: false, fit: "cover", bonus: true,
-        title: "The Freshest Source", subtitle: "Fresh-cracked, never canned",
-        location: "Labay Market, Nostrand Ave",
-        cover: "images/coconut.svg", caption: "Labay Market — images/coconut.jpg",
-        history: "Labay Market on Nostrand Ave is the freshest source around — fresh-cracked coconut, never carton or can.",
-        challenge: "Acquire fresh coconut water — fresh-cracked only, no carton, no can. Then race: who can drink it fastest without spilling? Last one standing gets bragging rights and is excused from buying the next round.",
-        mapsQuery: "Labay Market Nostrand Avenue Brooklyn NY"
       }
     ];
 

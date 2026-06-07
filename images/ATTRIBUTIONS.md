@@ -11,7 +11,6 @@ Historic Brooklyn photos supplied by the host (NYC tax photos, archival prints, 
 | Stop 5 · What Should Be Here? | `storefronts.jpg` | Arthur's Market, Flatbush — thriving then shuttered |
 | Stop 6 · Brooklyn in Bloom | `flowers.jpg` | Tree-lined Maple St (NYC tax photo) |
 | Stop 7 · Dutch Roots, Brooklyn Moves | `dutch.jpg` | Ebbets Field postcard, Brooklyn |
-| Bonus Round · The Freshest Source | `coconut.svg` | Themed illustration (no historic photo) |
 
 Other assets:
 
