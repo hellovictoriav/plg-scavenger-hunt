@@ -115,7 +115,7 @@
       display: block; width: 132px; height: auto; margin: 0 auto 0.6rem;
       filter: drop-shadow(0 2px 6px rgba(243, 235, 214, 0.9));
     }
-    .finish-top .brand-logo { width: 92px; margin-bottom: 0.2rem; filter: none; }
+    .finish-bottom .brand-logo { width: 84px; margin: 1.2rem auto 0; filter: none; }
     .eyebrow {
       font-family: var(--sign); text-transform: uppercase;
       letter-spacing: 0.32em; font-size: 0.72rem; font-weight: 600;
@@ -461,13 +461,13 @@
   <!-- ── FINISH ───────────────────────────────────────── -->
   <section class="view" id="view-finish">
     <div class="finish-top">
-      <img class="brand-logo" src="images/logo.png" alt="Handy Hunt">
       <div class="eyebrow">Last Stop</div>
       <h1>You <span class="hl">Made It</span></h1>
     </div>
     <div class="finish-bottom">
       <p>All seven stops conquered. Now jump in that double Dutch rope and celebrate Prospect Lefferts Gardens.</p>
       <button class="btn btn-go" id="btn-finish-map">Back to the Map</button>
+      <img class="brand-logo" src="images/logo.png" alt="Handy Hunt">
     </div>
   </section>
 
@@ -728,26 +728,15 @@
         </div>
         <a class="directions" href="${mapsUrl}" target="_blank" rel="noopener">&#128205; Get directions</a>
         <div class="photo-block">
-          <div class="photo-thumb-wrap" id="thumb-wrap">
-            <img class="photo-thumb" id="thumb" alt="Your photo">
-          </div>
           <button class="action-btn btn-complete ${done ? "is-complete" : ""}" id="btn-complete">
             ${done ? "\u2713 Completed" : "Mark complete"}
           </button>
-          <button class="action-btn btn-photo" id="btn-photo">&#128247; Add photo</button>
-          <a class="action-btn btn-share" href="${CONFIG.albumUrl}" target="_blank" rel="noopener">&#128248; Share to group album</a>
+          <a class="action-btn btn-share" href="${CONFIG.albumUrl}" target="_blank" rel="noopener">&#128248; Add photo to album</a>
           <div class="photo-hint">Adds your shot to everyone's shared album</div>
         </div>
       `;
 
       document.getElementById("btn-complete").addEventListener("click", () => toggleComplete(s.id));
-      document.getElementById("btn-photo").addEventListener("click", () => triggerPhotoInput(s.id));
-
-      const saved = await loadPhoto(s.id);
-      if (saved) {
-        document.getElementById("thumb").src = saved;
-        document.getElementById("thumb-wrap").classList.add("has-photo");
-      }
 
       document.getElementById("btn-prev").disabled = i === 0;
       document.getElementById("btn-next").textContent = i === STOPS.length - 1 ? "Finish \u2192" : "Next \u2192";
