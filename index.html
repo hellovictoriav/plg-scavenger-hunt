@@ -8,7 +8,7 @@
   <title>PLG Heritage Hunt</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Oswald:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Oswald:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --paper: #e8dcc0;          /* aged page */
@@ -81,7 +81,10 @@
     /* legibility for text sitting directly on a photo background */
     #view-stop.has-pagebg .stop-title-row h2,
     #view-stop.has-pagebg .stop-subtitle,
-    #view-stop.has-pagebg .directions {
+    #view-stop.has-pagebg .directions,
+    #view-finish .finish-inner h1,
+    #view-finish .finish-inner p,
+    #view-finish .eyebrow {
       text-shadow: 0 1px 0 rgba(243, 235, 214, 0.85), 0 0 16px rgba(243, 235, 214, 0.7);
     }
     .view.active { display: flex; }
@@ -240,9 +243,25 @@
     .stop-page { padding: 1.6rem 0 7rem; flex: 1; }
 
     .cover-frame {
-      background: var(--photo); padding: 12px 12px 14px;
-      box-shadow: var(--shadow); border: 1px solid rgba(90,70,50,0.25);
       transform: rotate(-1.1deg); margin: 0 auto 1.7rem; max-width: 96%;
+    }
+    .cover-stamp {
+      display: block; background: var(--photo); padding: 13px;
+      filter: drop-shadow(0 10px 22px rgba(40, 28, 14, 0.30));
+      --perf-r: 5px;   /* perforation radius */
+      --perf-d: 15px;  /* spacing between perforations */
+      -webkit-mask:
+        radial-gradient(var(--perf-r) at 50% 0, #0000 96%, #000) 0 0 / var(--perf-d) 100% repeat-x,
+        radial-gradient(var(--perf-r) at 50% 100%, #0000 96%, #000) 0 100% / var(--perf-d) 100% repeat-x,
+        radial-gradient(var(--perf-r) at 0 50%, #0000 96%, #000) 0 0 / 100% var(--perf-d) repeat-y,
+        radial-gradient(var(--perf-r) at 100% 50%, #0000 96%, #000) 100% 0 / 100% var(--perf-d) repeat-y;
+      -webkit-mask-composite: source-in;
+      mask:
+        radial-gradient(var(--perf-r) at 50% 0, #0000 96%, #000) 0 0 / var(--perf-d) 100% repeat-x,
+        radial-gradient(var(--perf-r) at 50% 100%, #0000 96%, #000) 0 100% / var(--perf-d) 100% repeat-x,
+        radial-gradient(var(--perf-r) at 0 50%, #0000 96%, #000) 0 0 / 100% var(--perf-d) repeat-y,
+        radial-gradient(var(--perf-r) at 100% 50%, #0000 96%, #000) 100% 0 / 100% var(--perf-d) repeat-y;
+      mask-composite: intersect;
     }
     .cover-frame .cover-img {
       width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
@@ -276,7 +295,26 @@
       font-family: var(--sign); font-weight: 700; text-transform: uppercase;
       letter-spacing: 0.16em; font-size: 0.68rem; color: var(--oxblood); margin-bottom: 0.5rem;
     }
-    .challenge p { font-size: 1.22rem; line-height: 1.45; }
+    .challenge p { font-family: "Montserrat", sans-serif; font-size: 1.04rem; line-height: 1.55; font-weight: 400; }
+
+    /* history section */
+    .stop-location {
+      font-family: var(--sign); text-transform: uppercase; letter-spacing: 0.08em;
+      font-size: 0.72rem; color: var(--sepia); margin: -0.7rem 0 1.1rem;
+      display: flex; gap: 0.4rem; align-items: flex-start;
+    }
+    .history {
+      background: var(--paper-card); color: var(--ink); border-radius: var(--radius);
+      padding: 1.2rem 1.3rem; box-shadow: var(--shadow); border-left: 7px solid var(--sepia);
+      border-top: 1px solid var(--rule); border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule); margin-bottom: 1.2rem;
+    }
+    .history .label {
+      font-family: var(--sign); font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.16em; font-size: 0.68rem; color: var(--sepia); margin-bottom: 0.5rem;
+    }
+    .history p { font-family: "Montserrat", sans-serif; font-size: 1rem; line-height: 1.6; font-weight: 400; }
+    .history p + p { margin-top: 0.7rem; }
 
     .directions {
       display: inline-flex; align-items: center; gap: 0.4rem;
@@ -367,7 +405,7 @@
 
       <div class="line-head">
         <h3>The Line</h3>
-        <span id="line-count">0 / 8 stops</span>
+        <span id="line-count">0 / 7 stops</span>
       </div>
       <nav class="line" id="line-list"></nav>
     </div>
@@ -382,7 +420,7 @@
     <div class="topbar">
       <div class="wrap">
         <button class="nav-btn" id="btn-to-map">&larr; Map</button>
-        <span class="counter" id="stop-counter">Stop 1 / 8</span>
+        <span class="counter" id="stop-counter">Stop 1 / 7</span>
       </div>
     </div>
     <div class="mini-progress"><div id="mini-fill"></div></div>
@@ -405,7 +443,7 @@
       <div class="eyebrow">Last Stop</div>
       <h1>You <span class="hl">Made It</span></h1>
       <hr class="rule">
-      <p>All eight stops conquered. Now jump in that double Dutch rope and celebrate Prospect Lefferts Gardens.</p>
+      <p>All seven stops conquered. Now jump in that double Dutch rope and celebrate Prospect Lefferts Gardens.</p>
       <button class="btn btn-go" id="btn-finish-map">Back to the Map</button>
     </div>
   </section>
@@ -420,62 +458,85 @@
     const STOPS = [
       {
         id: "history", letter: "Q", line: "#c0903a", darkText: true, fit: "cover",
-        title: "A Bite of History", subtitle: "James Lefferts & Black-owned Brooklyn",
+        title: "The Lefferts Reckoning", subtitle: "James Lefferts & Black economics",
+        location: "Flatbush Ave & Maple St — site of the original Lefferts Homestead",
         cover: "images/history.jpg", caption: "Lefferts Historic House — Brooklyn's Dutch roots",
-        challenge: "Bring the party an offering from a Black-owned business — enough to make ol' James Lefferts roll in his grave.",
-        mapsQuery: "Flatbush Avenue and Ocean Avenue Brooklyn NY"
+        history: "In 1893, James Lefferts stood near this corner and subdivided 600 lots of his family's farm into a 'high-end residential neighborhood,' with restrictive covenants ensuring only brick-and-stone single-family homes. His family had been among the largest enslavers in Brooklyn. The farmhouse stood right across the street at Flatbush and Maple until 1918, when the family donated it to the city on the condition that it be moved — it now sits in Prospect Park. James clearly had a plan, but I don't think it included people like me.",
+        challenge: "Find a Black-owned business and bring an offering back for the party — make James squirm as you build up Black economics.",
+        mapsQuery: "Flatbush Avenue and Maple Street Brooklyn NY"
       },
       {
         id: "doubles", letter: "2", line: "#8c3b2b", darkText: false, fit: "cover",
-        title: "The Melting Pot", subtitle: "Caribbean & African American PLG",
+        title: "Doubles for the Diaspora", subtitle: "The Little Caribbean",
         cover: "images/doubles.jpg", caption: "Flatbush Ave apartment row, early 1900s",
-        challenge: "Caribbean and African American families infused this neighborhood with culture, making it more of a melting pot than ever. Grab some doubles to honor both groups.",
+        history: "Beginning in the 1950s and '60s, Caribbean and African American families transformed this neighborhood — now recognized as The Little Caribbean, home to the largest and most diverse Caribbean-American community outside the West Indies. Doubles traces back further: indentured laborers from India were brought to Trinidad to work the sugar plantations after slavery's abolition in 1838, and the dish was invented in the 1930s by Emamool Deen and his wife Raheman Rasulan Deen of Princes Town — first sold as channa and bara. That's three diaspora communities in one sandwich.",
+        challenge: "Everyone gets doubles. Before eating, each person explains — in one sentence — what their doubles represent about the communities who built this neighborhood. Then eat. No fork allowed.",
         mapsQuery: "Flatbush Avenue Brooklyn NY doubles roti"
       },
       {
-        id: "gentrifier", letter: "5", line: "#4f6b3a", darkText: false, fit: "contain",
-        title: "Gentrifier Watch", subtitle: "Flatbush Ave commercial corridor",
-        cover: "images/gentrifier.jpg", caption: "534 Flatbush Ave — 1940s & 1980s tax photos",
-        challenge: "What's the most gentrified business on Flatbush? Ask the staff how they foster community.",
-        mapsQuery: "534 Flatbush Avenue Brooklyn NY"
-      },
-      {
         id: "beauty", letter: "B", line: "#b5602e", darkText: false, fit: "cover",
-        title: "Beauty Supply Remix", subtitle: "Names shape identity",
+        title: "Name It & Claim It", subtitle: "Naming is power",
+        location: "Any beauty supply store on Flatbush Ave",
         cover: "images/beauty.jpg", caption: "The Charm Beauty Shop, 1938 (FSA, Library of Congress)",
-        challenge: "What you name a place has transference into who it is. Find a wig that's misnamed and give it the personality it deserves.",
+        history: "What a neighborhood is called shapes who feels welcome in it. Longtime residents have pushed back on the name 'Prospect Lefferts Gardens' — many still know it simply as Flatbush — pointing to the rebranding as part of gentrification's corporate makeover of a largely low-to-middle-income migrant community of color. Naming is power.",
+        challenge: "Find a wig with a name that doesn't match its energy and rename it. Give it a full character: an origin story, what it orders at the roti shop, what it thinks about the new coffee place on the block. The team votes on the best character. Photo with the wig required.",
         mapsQuery: "beauty supply Flatbush Avenue Brooklyn NY"
       },
       {
+        id: "gentrifier", letter: "5", line: "#4f6b3a", darkText: false, fit: "contain",
+        title: "Most Gentrified on Flatbush", subtitle: "A block in transition",
+        cover: "images/gentrifier.jpg", caption: "534 Flatbush Ave — 1940s & 1980s tax photos",
+        history: "The businesses that arrive and thrive on a block say a lot about a neighborhood in transition. 705 Flatbush Ave is instructive: it housed Parkside, a craft-cocktail and Neapolitan pizza bar that opened in 2015 and later closed, followed by Black Nile, a beloved Black-owned soul food spot that was also eventually displaced. The address itself is a whole story.",
+        challenge: "Each person nominates one currently operating business as the most gentrified on the strip. The group votes, then you go in and ask a staff member: 'How does this business foster community with the people who've always been here?' Report back honestly — no judgment on the answer, just witness it.",
+        mapsQuery: "705 Flatbush Avenue Brooklyn NY"
+      },
+      {
         id: "storefronts", letter: "A", line: "#3a5a7a", darkText: false, fit: "contain",
-        title: "Ghosts of Storefronts", subtitle: "Empty windows, big dreams",
+        title: "What Should Be Here?", subtitle: "Every empty storefront is a story",
+        location: "A vacant or shuttered storefront on Flatbush Ave",
         cover: "images/storefronts.jpg", caption: "Arthur's Market, Flatbush — then & shuttered",
-        challenge: "Find a business that's closed. What should be there instead?",
+        history: "Every empty storefront is a story. Business owners along Flatbush between Parkside Avenue and Empire Boulevard began organizing into a merchant association in 2012 precisely because so many felt the threat of displacement — working collectively to protect their leases and represent their interests in local and state government. Need a candidate? 705 Flatbush (from the last stop) has cycled through multiple closures and sits at the heart of that tension.",
+        challenge: "Stand in front of the closed storefront. Each person pitches what should go there — it has to serve the community that's been here, not the one arriving. One minute each, then the group votes. Write the winning idea on paper and photograph it in the window.",
         mapsQuery: "Flatbush Avenue Brooklyn NY vacant storefront"
       },
       {
         id: "flowers", letter: "M", line: "#6e4a2a", darkText: false, fit: "contain",
         title: "Brooklyn in Bloom", subtitle: "Native flora hunt",
+        location: "Prospect Park edge or any green median along Flatbush",
         cover: "images/flowers.jpg", caption: "Tree-lined Maple St, PLG (NYC tax photo)",
-        challenge: "Capture photos of flowers native to Brooklyn — think coneflower, goldenrod, or milkweed growing wild nearby.",
+        history: "Long before Leffert Pietersen arrived in 1660, this land had its own ecology. Brooklyn's native plants still persist along the park edge and in the green medians right here on Flatbush.",
+        challenge: "Photograph as many native Brooklyn flowering plants as you can find. Look for Black-Eyed Susans (golden-yellow petals, dark centers), New England Aster (purple-pink late blooms), and Wild Columbine (red-and-yellow drooping flowers). Most species wins. Bonus point: find something growing out of concrete.",
         mapsQuery: "Prospect Park Brooklyn native plants"
       },
       {
-        id: "coconut", letter: "7", line: "#6e3f5e", darkText: false, fit: "cover", bonus: true,
-        title: "Bonus: Coconut Water", subtitle: "Nostrand Ave refreshment",
-        cover: "images/coconut.svg", caption: "Labay Market — images/coconut.jpg",
-        challenge: "Acquire coconut water from the freshest source on Nostrand Ave — Labay Market.",
-        mapsQuery: "Labay Market Nostrand Avenue Brooklyn NY"
+        id: "dutch", letter: "S", line: "#5a4632", darkText: false, fit: "cover",
+        title: "Dutch Roots, Brooklyn Moves", subtitle: "Double Dutch is Brooklyn",
+        location: "Any sidewalk, schoolyard, or park path on Flatbush",
+        cover: "images/dutch.jpg", caption: "Ebbets Field, Brooklyn — home of the Dodgers",
+        history: "The Dutch founded this neighborhood in 1660. Double Dutch — the rope-jumping tradition developed and elevated by Black children in New York City — became a global art form and a signature expression of Brooklyn street culture. It belongs to this neighborhood as much as any brownstone.",
+        challenge: "Find or bring a jump rope. Everyone takes a turn in the double Dutch rope — or attempts it. Whoever lasts longest gets to name one stop on next year's hunt.",
+        mapsQuery: CONFIG.finishMapsQuery
       },
       {
-        id: "dutch", letter: "S", line: "#5a4632", darkText: false, fit: "cover",
-        title: "Finish: Dutch Roots", subtitle: CONFIG.finishAddress,
-        cover: "images/dutch.jpg", caption: "Ebbets Field, Brooklyn — home of the Dodgers",
-        pageBg: "images/double-dutch.jpg",
-        challenge: "Celebrate the neighborhood's Dutch roots by getting a turn or a jump in a double Dutch rope!",
-        mapsQuery: CONFIG.finishMapsQuery
+        id: "coconut", letter: "7", line: "#6e3f5e", darkText: false, fit: "cover", bonus: true,
+        title: "The Freshest Source", subtitle: "Fresh-cracked, never canned",
+        location: "Labay Market, Nostrand Ave",
+        cover: "images/coconut.svg", caption: "Labay Market — images/coconut.jpg",
+        history: "Labay Market on Nostrand Ave is the freshest source around — fresh-cracked coconut, never carton or can.",
+        challenge: "Acquire fresh coconut water — fresh-cracked only, no carton, no can. Then race: who can drink it fastest without spilling? Last one standing gets bragging rights and is excused from buying the next round.",
+        mapsQuery: "Labay Market Nostrand Avenue Brooklyn NY"
       }
     ];
+
+    const NUMBERED_STOPS = STOPS.filter(s => !s.bonus).length;
+    function stopNumber(i) {
+      let n = 0;
+      for (let k = 0; k <= i; k++) if (!STOPS[k].bonus) n++;
+      return n;
+    }
+    function stopLabel(i) {
+      return STOPS[i].bonus ? "Bonus Round" : `Stop ${stopNumber(i)}`;
+    }
 
     const STORAGE_KEY = "plg-hunt-progress";
     const DB_NAME = "plg-hunt-photos";
@@ -557,7 +618,7 @@
     }
     function saveProgress() { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
     function isComplete(id) { return !!progress[id]; }
-    function completedCount() { return STOPS.filter(s => isComplete(s.id)).length; }
+    function completedCount() { return STOPS.filter(s => !s.bonus && isComplete(s.id)).length; }
 
     // ── Cover resolver (jpg/png/svg) ───────────────────
     function resolveCover(basePath) {
@@ -588,7 +649,7 @@
           <span class="bullet ${s.darkText ? "dark-text" : ""}" style="background:${s.line}">${s.letter}</span>
           <span class="meta">
             <span class="name">${s.title}</span><br>
-            <span class="stopno">Stop ${i + 1}${s.bonus ? " · Bonus" : ""}</span>
+            <span class="stopno">${stopLabel(i)}</span>
           </span>
           <span class="check">&#10003;</span>
           <span class="arrow">&rsaquo;</span>
@@ -597,7 +658,7 @@
       list.querySelectorAll(".stop-row").forEach(row => {
         row.addEventListener("click", () => goToStop(+row.dataset.idx));
       });
-      document.getElementById("line-count").textContent = `${completedCount()} / ${STOPS.length} stops`;
+      document.getElementById("line-count").textContent = `${completedCount()} / ${NUMBERED_STOPS} stops`;
     }
 
     // ── Page background ────────────────────────────────
@@ -615,7 +676,7 @@
       const view = document.getElementById("view-stop");
       const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.mapsQuery)}`;
 
-      document.getElementById("stop-counter").textContent = `Stop ${i + 1} / ${STOPS.length}`;
+      document.getElementById("stop-counter").textContent = s.bonus ? "Bonus Round" : `Stop ${stopNumber(i)} / ${NUMBERED_STOPS}`;
 
       let coverHtml = "";
       if (s.pageBg) {
@@ -625,7 +686,9 @@
         const cover = await resolveCover(s.cover);
         coverHtml = `
         <figure class="cover-frame">
-          <img class="cover-img fit-${s.fit || "cover"}" ${cover ? `src="${cover}"` : ""} alt="${s.title}">
+          <span class="cover-stamp">
+            <img class="cover-img fit-${s.fit || "cover"}" ${cover ? `src="${cover}"` : ""} alt="${s.title}">
+          </span>
           <figcaption class="cover-cap">${s.caption}</figcaption>
         </figure>`;
         setPageBg(null);
@@ -639,8 +702,13 @@
           <h2>${s.title}</h2>
         </div>
         <div class="stop-subtitle">${s.subtitle}</div>
+        ${s.location ? `<div class="stop-location">&#128205; ${s.location}</div>` : ""}
+        ${s.history ? `<div class="history">
+          <div class="label">The History</div>
+          <p>${s.history}</p>
+        </div>` : ""}
         <div class="challenge">
-          <div class="label">Your Challenge</div>
+          <div class="label">${s.bonus ? "The Bonus Challenge" : "Your Challenge"}</div>
           <p>${s.challenge}</p>
         </div>
         <a class="directions" href="${mapsUrl}" target="_blank" rel="noopener">&#128205; Get directions</a>
@@ -672,7 +740,7 @@
     }
 
     function updateMiniProgress() {
-      const pct = (completedCount() / STOPS.length) * 100;
+      const pct = (completedCount() / NUMBERED_STOPS) * 100;
       document.getElementById("mini-fill").style.width = pct + "%";
     }
 
@@ -685,7 +753,7 @@
       btn.textContent = done ? "\u2713 Completed" : "Mark complete";
       updateMiniProgress();
       renderHub();
-      if (completedCount() === STOPS.length) {
+      if (completedCount() === NUMBERED_STOPS) {
         setTimeout(() => { location.hash = "#finish"; }, 450);
       }
     }
@@ -736,7 +804,7 @@
         showView("view-stop");
         renderStop(i);
       } else if (h === "#finish") {
-        setPageBg(null);
+        setPageBg(`linear-gradient(rgba(232,220,192,0.5), rgba(232,220,192,0.68)), url('images/double-dutch.jpg')`);
         showView("view-finish");
         window.scrollTo(0, 0);
       } else {
