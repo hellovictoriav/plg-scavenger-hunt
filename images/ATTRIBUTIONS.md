@@ -6,7 +6,7 @@ Historic Brooklyn photos supplied by the host (NYC tax photos, archival prints, 
 |------|------|-------|
 | Stop 1 · The Lefferts Reckoning | `history.jpg` | Lefferts Historic House (Dutch colonial homestead) |
 | Stop 2 · Doubles for the Diaspora | `doubles.jpg` | 563 Flatbush Ave apartment row, early 1900s |
-| Stop 3 · Name It & Claim It | `beauty.jpg` | The Charm Beauty Shop, Worthington OH, 1938 — FSA/OWI, Library of Congress (public domain) |
+| Stop 3 · Name It & Claim It | `beauty.jpg` | Valmor Hair Styles "Great Wig Buys" catalog ad, 1969 |
 | Stop 4 · Most Gentrified on Flatbush | `gentrifier.jpg` | 534 Flatbush Ave — 1940s & 1980s tax records |
 | Stop 5 · What Should Be Here? | `storefronts.jpg` | Arthur's Market, Flatbush — thriving then shuttered |
 | Stop 6 · Brooklyn in Bloom | `flowers.jpg` | Tree-lined Maple St (NYC tax photo) |
@@ -16,7 +16,7 @@ Historic Brooklyn photos supplied by the host (NYC tax photos, archival prints, 
 Other assets:
 
 - `welcome.jpg` — Prospect Park subway station (welcome-page full background)
-- `double-dutch.jpg` — Double Dutch on a Brooklyn street ("You Made It" finish-screen background)
+- `double-dutch.jpg` — Double Dutch jumpers on a Brooklyn street, B&W ("You Made It" finish-screen background)
 - `brooklyn-commons.jpg` — Bond Bread factory / clock tower (spare cover, unused)
 
 ## Replace with your own photos
